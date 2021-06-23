@@ -30,8 +30,6 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            app:backgroundTint="@null"
-            android:onClick="@{viewmodel::clickLogin}"
             android:id="@+id/button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -39,8 +37,10 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="24dp"
             android:background="@drawable/bg_login_button"
+            android:onClick="@{viewmodel::clickLogin}"
             android:text="LOGIN"
             android:textColor="@color/text_color_white"
+            app:backgroundTint="@null"
             app:cornerRadius="6dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
