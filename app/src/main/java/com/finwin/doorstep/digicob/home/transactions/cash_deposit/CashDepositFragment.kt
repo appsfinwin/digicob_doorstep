@@ -160,9 +160,10 @@ class CashDepositFragment : Fragment() {
     fun texttoSpeech(name: String, rupees: String) {
         textToSpeechSystem = TextToSpeech(context) { status ->
             if (status == TextToSpeech.SUCCESS) {
-                val result: Int = textToSpeechSystem?.setLanguage(Locale("en", "IN")) ?: textToSpeechSystem?.setSpeechRate(
-                    .8f
-                )!!
+                val result: Int = textToSpeechSystem?.setLanguage(Locale("en", "IN"))
+                    ?: textToSpeechSystem?.setSpeechRate(
+                        .8f
+                    )!!
                 if (result == TextToSpeech.LANG_MISSING_DATA ||
                     result == TextToSpeech.LANG_NOT_SUPPORTED
                 ) {
@@ -217,8 +218,10 @@ class CashDepositFragment : Fragment() {
 
         confirmDialog.setCanceledOnTouchOutside(false)
         confirmDialog.setOnCancelListener(
-            DialogInterface.OnCancelListener { confirmDialog.cancel()
-                viewmodel.mAction.value = CashDepositAction(CashDepositAction.DEFAULT)}
+            DialogInterface.OnCancelListener {
+                confirmDialog.cancel()
+                viewmodel.mAction.value = CashDepositAction(CashDepositAction.DEFAULT)
+            }
         )
     }
 

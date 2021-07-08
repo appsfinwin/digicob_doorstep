@@ -2,6 +2,7 @@ package com.finwin.doorstep.digicob.home.bc_report.date_to_date_report
 
 import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
+import com.finwin.doorstep.digicob.home.agent_management.change_password.action.ChangePasswordAction
 import com.finwin.doorstep.digicob.retrofit.ApiInterface
 import com.finwin.doorstep.digicob.home.bc_report.date_to_date_report.action.DateToDateAction
 
@@ -9,6 +10,8 @@ import com.finwin.doorstep.digicob.home.bc_report.date_to_date_report.action.Dat
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import okhttp3.RequestBody
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 
 class DateToDateReportRepository {
 
@@ -30,8 +33,28 @@ class DateToDateReportRepository {
                         mAction.value = DateToDateAction(DateToDateAction.API_ERROR, response.bc_report.error+" on "+response.bc_report.TXN_DATE)
                     }
                 }, { error ->
-                    mAction.value =
-                        DateToDateAction(DateToDateAction.API_ERROR, error.message.toString())
+                    when (error) {
+                        is SocketTimeoutException -> {
+                            mAction.value = DateToDateAction(
+                                DateToDateAction.API_ERROR,
+                                "Timeout! Please try again later"
+                            )
+                        }
+                        is UnknownHostException -> {
+                            mAction.value = DateToDateAction(
+                                DateToDateAction.API_ERROR,
+                                "No Internet"
+                            )
+                        }
+                        else -> {
+                            mAction.value =
+                                DateToDateAction(
+                                    DateToDateAction.API_ERROR,
+                                    error.message.toString()
+                                )
+                        }
+                    }
+
                 }
             )
 

@@ -12,7 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".home.transactions.cash_transfer.Cash_TransferFragment">
+        tools:context=".home.transactions.cash_transfer.CashTransferFragment">
 
         <ScrollView
             android:layout_width="0dp"
@@ -79,7 +79,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="8dp"
-                                android:onClick="@{viewModel::clickSearch}"
+                                android:onClick="@{viewModel::clickSearchDebitAccount}"
                                 android:padding="7dp"
                                 android:src="@drawable/ic_search"
                                 app:layout_constraintBottom_toBottomOf="@+id/et_account_layout"
@@ -93,7 +93,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="16dp"
                                 android:background="@drawable/bg_login_button"
-                                android:onClick="@{viewModel::clickSubmit}"
+                                android:onClick="@{viewModel::clickDebitSubmit}"
                                 android:text="Submit"
                                 android:textColor="@color/text_color_white"
                                 app:backgroundTint="@null"
@@ -115,7 +115,7 @@
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/button2">
+                                app:layout_constraintTop_toBottomOf="@+id/view18">
 
                                 <TextView
                                     android:id="@+id/textView15"
@@ -166,11 +166,9 @@
                                     android:layout_marginStart="8dp"
                                     android:layout_marginTop="8dp"
                                     android:layout_marginEnd="8dp"
-                                    android:layout_marginBottom="8dp"
                                     android:fontFamily="@font/nunito_regular"
                                     android:text="@{viewModel.debitMobile}"
                                     android:textSize="15dp"
-                                    app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toEndOf="@+id/view17"
                                     app:layout_constraintTop_toBottomOf="@+id/textView17" />
@@ -181,9 +179,10 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="8dp"
                                     android:layout_marginTop="15dp"
+                                    android:fontFamily="@font/nunito_bold"
                                     android:text="From"
-                                    android:fontFamily="@font/nunito_regular"
-                                    android:textSize="15dp"
+                                    android:textSize="17dp"
+                                    android:textStyle="bold"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -203,8 +202,8 @@
                                     android:layout_marginStart="8dp"
                                     android:layout_marginTop="8dp"
                                     android:layout_marginEnd="8dp"
-                                    android:text="Name"
                                     android:fontFamily="@font/nunito_regular"
+                                    android:text="Name"
                                     android:textSize="15dp"
                                     app:layout_constraintEnd_toStartOf="@+id/view17"
                                     app:layout_constraintStart_toStartOf="parent"
@@ -222,7 +221,7 @@
                                     android:textSize="15dp"
                                     app:layout_constraintEnd_toStartOf="@+id/view17"
                                     app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toBottomOf="@+id/textView188" />
+                                    app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
                                 <TextView
                                     android:id="@+id/textView190"
@@ -236,7 +235,7 @@
                                     android:textSize="15dp"
                                     app:layout_constraintEnd_toStartOf="@+id/view17"
                                     app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toBottomOf="@+id/textView189" />
+                                    app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
                                 <TextView
                                     android:id="@+id/textView191"
@@ -245,28 +244,69 @@
                                     android:layout_marginStart="8dp"
                                     android:layout_marginTop="8dp"
                                     android:layout_marginEnd="8dp"
-                                    android:text="Phone Number"
                                     android:fontFamily="@font/nunito_regular"
+                                    android:text="Phone Number"
                                     android:textSize="15dp"
                                     app:layout_constraintEnd_toStartOf="@+id/view17"
                                     app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toBottomOf="@+id/textView190" />
+                                    app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
+                                <TextView
+                                    android:fontFamily="@font/nunito_regular"
+                                    android:text="Account Balance"
+                                    android:textSize="15dp"
+                                    android:id="@+id/textView199"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginTop="8dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:layout_marginBottom="8dp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toStartOf="@+id/view17"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/textView25" />
+
+                                <TextView
+                                    android:id="@+id/textView200"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginTop="8dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:layout_marginBottom="8dp"
+                                    android:fontFamily="@font/nunito_regular"
+                                    android:text="@{viewModel.etDebitBalance}"
+                                    android:textSize="15dp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toEndOf="@+id/view17"
+                                    app:layout_constraintTop_toBottomOf="@+id/textView25" />
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            <View
+                                android:id="@+id/view18"
+                                android:layout_width="wrap_content"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="8dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/button2" />
 
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <androidx.constraintlayout.widget.ConstraintLayout
-
-                            android:background="@drawable/bg_white"
-                            android:elevation="3dp"
                             android:id="@+id/constraintLayout49"
                             android:layout_width="0dp"
-                            android:layout_height="319dp"
+                            android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
+                            android:background="@drawable/bg_white"
+                            android:elevation="3dp"
+                            android:visibility="@{viewModel.creditLayoutVisibility}"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/layoutdebit">
@@ -286,8 +326,8 @@
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="@={viewModel.creditAccountNumber}"
-                                    android:hint="Enter Credit Account Number" />
+                                    android:hint="Enter Credit Account Number"
+                                    android:text="@={viewModel.creditAccountNumber}" />
                             </com.google.android.material.textfield.TextInputLayout>
 
                             <ImageView
@@ -295,6 +335,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="8dp"
+                                android:onClick="@{viewModel::clickSearchCreditAccount}"
                                 android:padding="7dp"
                                 app:layout_constraintBottom_toBottomOf="@+id/textInputLayout10"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -306,7 +347,10 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="16dp"
-                                android:text="Button"
+                                android:background="@drawable/bg_login_button"
+                                android:onClick="@{viewModel::clickCreditSubmit}"
+                                android:text="submit"
+                                android:textColor="@color/white"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout10" />
@@ -318,12 +362,218 @@
                                 android:layout_marginTop="8dp"
                                 android:layout_marginEnd="8dp"
                                 android:layout_marginBottom="31dp"
+                                android:visibility="@{viewModel.creditDetailsVisibility}"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@+id/button23">
 
+                                <TextView
+                                    android:id="@+id/textView192"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginTop="16dp"
+                                    android:fontFamily="@font/nunito_bold"
+                                    android:text="To"
+                                    android:textColor="@color/black"
+                                    android:textSize="17sp"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/textView193"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginTop="8dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:fontFamily="@font/nunito_regular"
+                                    android:text="Name"
+                                    android:textColor="@color/black"
+                                    android:textSize="15dp"
+
+                                    app:layout_constraintEnd_toStartOf="@+id/view19"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/textView192" />
+
+                                <TextView
+                                    android:id="@+id/textView194"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginTop="8dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:fontFamily="@font/nunito_regular"
+                                    android:text="@string/account_number"
+                                    android:textColor="@color/black"
+                                    android:textSize="15dp"
+                                    app:layout_constraintEnd_toStartOf="@+id/view19"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/textView196" />
+
+                                <TextView
+                                    android:id="@+id/textView195"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginTop="8dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:fontFamily="@font/nunito_regular"
+                                    android:text="@string/mobile"
+                                    android:textColor="@color/black"
+                                    android:textSize="15dp"
+                                    app:layout_constraintEnd_toStartOf="@+id/view19"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/textView197" />
+
+                                <View
+                                    android:id="@+id/view19"
+                                    android:layout_width="1dp"
+                                    android:layout_height="100dp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/textView196"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginTop="8dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:fontFamily="@font/nunito_regular"
+                                    android:text="@{viewModel.creditName}"
+                                    android:textColor="@color/black"
+                                    android:textSize="15dp"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toEndOf="@+id/view19"
+                                    app:layout_constraintTop_toBottomOf="@+id/textView192" />
+
+                                <TextView
+                                    android:id="@+id/textView197"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginTop="8dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:fontFamily="@font/nunito_regular"
+                                    android:text="@{viewModel.creditAccountNumber}"
+                                    android:textColor="@color/black"
+                                    android:textSize="15dp"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toEndOf="@+id/view19"
+                                    app:layout_constraintTop_toBottomOf="@+id/textView196" />
+
+                                <TextView
+                                    android:id="@+id/textView198"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginTop="8dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:fontFamily="@font/nunito_regular"
+                                    android:text="@{viewModel.creditMobile}"
+                                    android:textColor="@color/black"
+                                    android:textSize="15dp"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toEndOf="@+id/view19"
+                                    app:layout_constraintTop_toBottomOf="@+id/textView197" />
                             </androidx.constraintlayout.widget.ConstraintLayout>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:visibility="@{viewModel.amountLayoutVisibility}"
+                            android:id="@+id/constraintLayout50"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/constraintLayout49">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/textInputLayout11"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="8dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="Enter Amount"
+                                    android:inputType="number"
+                                    android:text="@={viewModel.etTransferAmount}" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <Button
+                                android:id="@+id/button24"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:onClick="@{viewModel::clickSubmitAmount}"
+                                android:text="Submit"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/textInputLayout11" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:visibility="@{viewModel.otpLayoutVisibility}"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/constraintLayout50">
+
+                            <Button
+                                android:onClick="@{viewModel::clickSubmitOtp}"
+                                android:id="@+id/button25"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:text="submit otp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/textInputLayout12" />
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/textInputLayout12"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="8dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="Enter OTP"
+                                    android:text="@={viewModel.etOtp}" />
+                            </com.google.android.material.textfield.TextInputLayout>
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>

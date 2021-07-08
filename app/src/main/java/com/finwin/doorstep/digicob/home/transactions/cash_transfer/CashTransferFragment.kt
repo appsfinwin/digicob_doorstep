@@ -13,14 +13,14 @@ import androidx.lifecycle.Observer
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.finwin.doorstep.digicob.R
 import com.finwin.doorstep.digicob.databinding.CashTransferFragmentBinding
-import com.finwin.doorstep.digicob.home.transactions.cash_deposit.CashDepositAction
 import com.finwin.doorstep.digicob.home.transactions.search_account.SearchActivity
+import com.finwin.doorstep.digicob.print_reciept.ReceiptActivity
 import com.finwin.doorstep.digicob.utils.Constants
 
-class Cash_TransferFragment : Fragment() {
+class CashTransferFragment : Fragment() {
 
     companion object {
-        fun newInstance() = Cash_TransferFragment()
+        fun newInstance() = CashTransferFragment()
     }
 
     private lateinit var viewModel: CashTransferViewModel
@@ -45,21 +45,73 @@ class Cash_TransferFragment : Fragment() {
             viewModel.cancelLoading()
             when(it.action)
             {
-//                CashTransferAction.GET_ACCOUNT_HOLDER_SUCCESS->{}
+
                 CashTransferAction.API_ERROR->{}
-                CashTransferAction.CLICK_SEARCH -> {
+                CashTransferAction.CASH_TRANSFER_SUCCESS->{
+                    var intent = Intent(activity, ReceiptActivity::class.java)
+                    intent.putExtra(Constants.FROM, Constants.CASH_DEPOSIT)
+                    intent.putExtra(
+                        Constants.TRANSACTION_ID,
+                        it.cashTransferResponse.receipt.data.TRAN_ID
+                    )
+                    intent.putExtra(
+                        Constants.OLD_BALANCE,
+                        it.cashTransferResponse.receipt.data.OLD_BALANCE
+                    )
+                    intent.putExtra(
+                        Constants.DEPOSIT_AMOUNT,
+                        it.cashTransferResponse.receipt.data.WITHDRAWAL_AMOUNT
+                    )
+                    intent.putExtra(
+                        Constants.CURRENT_BALANCE,
+                        it.cashTransferResponse.receipt.data.CURRENT_BALANCE
+                    )
+                    intent.putExtra(
+                        Constants.DEPOSIT_DATE,
+                        it.cashTransferResponse.receipt.data.TRANSFER_DATE
+                    )
+                    intent.putExtra(
+                        Constants.PREVIOUS_BALANCE,
+                        it.cashTransferResponse.receipt.data.OLD_BALANCE
+                    )
+                    intent.putExtra(
+                        Constants.ACCOUNT_NUMBER,
+                        it.cashTransferResponse.receipt.data.ACC_NO
+                    )
+                    intent.putExtra(Constants.NAME, it.cashTransferResponse.receipt.data.NAME)
+                    intent.putExtra(Constants.MOBILE, it.cashTransferResponse.receipt.data.MOBILE)
+                    startActivityForResult(intent, Constants.INTENT_RECIEPT_FROM_CASH_DEPOSIT)
+                }
+                CashTransferAction.OTP_GENERATE_SUCCESS->{
+                    viewModel.otpId.set(it.otpGenerateResponse.otp.otp_id)
+                }
+                CashTransferAction.CLICK_SEARCH_DEBIT_ACCOUNT -> {
                     var intent: Intent = Intent(activity, SearchActivity::class.java)
                     startActivityForResult(
                         intent,
                         Constants.INTENT_SEARCH_ACCOUNT_FOR_DEBIT_ACCOUNT
                     )
                 }
-                CashTransferAction.GET_ACCOUNT_HOLDER_SUCCESS -> {
+                CashTransferAction.CLICK_SEARCH_CREDIT_ACCOUNT -> {
+                    var intent: Intent = Intent(activity, SearchActivity::class.java)
+                    startActivityForResult(
+                        intent,
+                        Constants.INTENT_SEARCH_ACCOUNT_FOR_CREDIT_ACCOUNT
+                    )
+                }
+                CashTransferAction.GET_DEBIT_ACCOUNT_HOLDER_SUCCESS -> {
+                    viewModel.creditLayoutVisibility.set(View.VISIBLE)
                     viewModel.setDebitAccountHolderData(it.getAccountHolderResponse.account)
+                }
+                CashTransferAction.GET_CREDIT_ACCOUNT_HOLDER_SUCCESS -> {
+                    viewModel.creditLayoutVisibility.set(View.VISIBLE)
+                    viewModel.setCreditAccountHolderData(it.getAccountHolderResponse.account)
+                    viewModel.amountLayoutVisibility.set(View.VISIBLE)
                 }
 //                CashTransferAction.CLICK_DEPOSIT -> {
 //                    //showDialog()
 //                }
+
                 CashTransferAction.API_ERROR -> {
                     val customView: View =
                         LayoutInflater.from(context).inflate(R.layout.layout_error_layout, null)
@@ -69,6 +121,11 @@ class Cash_TransferFragment : Fragment() {
                         .setTitleText("ERROR")
                         .setCustomView(customView)
                         .show()
+                }
+                CashTransferAction.OTP_GENERATE_SUCCESS->
+                {
+                    viewModel.otpId.set(it.otpGenerateResponse.otp.otp_id)
+                    viewModel.otpLayoutVisibility.set(View.VISIBLE)
                 }
             }
 

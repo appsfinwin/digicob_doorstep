@@ -7,6 +7,8 @@ import com.finwin.doorstep.digicob.retrofit.ApiInterface
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import okhttp3.RequestBody
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 
 class BalanceRnquiryRepository {
     
@@ -29,8 +31,27 @@ class BalanceRnquiryRepository {
                         mAction.value = BalanceAction(BalanceAction.API_ERROR, response)
                     }
                 }, { error ->
-                    mAction.value =
-                        BalanceAction(BalanceAction.API_ERROR, error.message.toString())
+                    when (error) {
+                        is SocketTimeoutException -> {
+                            mAction.value = BalanceAction(
+                                BalanceAction.API_ERROR,
+                                "Timeout! Please try again later"
+                            )
+                        }
+                        is UnknownHostException -> {
+                            mAction.value = BalanceAction(
+                                BalanceAction.API_ERROR,
+                                "No Internet"
+                            )
+                        }
+                        else -> {
+                            mAction.value =
+                                BalanceAction(
+                                    BalanceAction.API_ERROR,
+                                    error.message.toString()
+                                )
+                        }
+                    }
                 }
             )
 
@@ -53,8 +74,28 @@ class BalanceRnquiryRepository {
                         mAction.value = BalanceAction(BalanceAction.API_ERROR, "")
                     }
                 }, { error ->
-                    mAction.value =
-                        BalanceAction(BalanceAction.API_ERROR, error.message.toString())
+                    when (error) {
+                        is SocketTimeoutException -> {
+                            mAction.value = BalanceAction(
+                                BalanceAction.API_ERROR,
+                                "Timeout! Please try again later"
+                            )
+                        }
+                        is UnknownHostException -> {
+                            mAction.value = BalanceAction(
+                                BalanceAction.API_ERROR,
+                                "No Internet"
+                            )
+                        }
+                        else -> {
+                            mAction.value =
+                                BalanceAction(
+                                    BalanceAction.API_ERROR,
+                                    error.message.toString()
+                                )
+                        }
+                    }
+
                 }
             )
 

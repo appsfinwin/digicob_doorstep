@@ -2,12 +2,15 @@ package com.finwin.doorstep.digicob.home.bc_report.daily_report
 
 import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
+import com.finwin.doorstep.digicob.home.agent_management.change_password.action.ChangePasswordAction
 import com.finwin.doorstep.digicob.retrofit.ApiInterface
 import com.finwin.doorstep.digicob.home.bc_report.daily_report.action.DailyReportAction
 
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import okhttp3.RequestBody
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 
 class DailyReportRepository {
     lateinit var mAction: MutableLiveData<DailyReportAction>
@@ -30,8 +33,28 @@ class DailyReportRepository {
                         mAction.value = DailyReportAction(DailyReportAction.API_ERROR, response.bc_report.error+" on "+response.bc_report.TXN_DATE)
                     }
                 }, { error ->
-                    mAction.value =
-                        DailyReportAction(DailyReportAction.API_ERROR, error.message.toString())
+                    when (error) {
+                        is SocketTimeoutException -> {
+                            mAction.value = DailyReportAction(
+                                DailyReportAction.API_ERROR,
+                                "Timeout! Please try again later"
+                            )
+                        }
+                        is UnknownHostException -> {
+                            mAction.value = DailyReportAction(
+                                DailyReportAction.API_ERROR,
+                                "No Internet"
+                            )
+                        }
+                        else -> {
+                            mAction.value =
+                                DailyReportAction(
+                                    DailyReportAction.API_ERROR,
+                                    error.message.toString()
+                                )
+                        }
+                    }
+
                 }
             )
 

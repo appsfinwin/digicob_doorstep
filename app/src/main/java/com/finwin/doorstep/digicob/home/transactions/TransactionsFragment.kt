@@ -13,7 +13,7 @@ import com.finwin.doorstep.digicob.R
 import com.finwin.doorstep.digicob.databinding.FragmentTransactionsBinding
 import com.finwin.doorstep.digicob.home.home_activity.HomeActivity
 import com.finwin.doorstep.digicob.home.transactions.cash_deposit.CashDepositFragment
-import com.finwin.doorstep.digicob.home.transactions.cash_transfer.Cash_TransferFragment
+import com.finwin.doorstep.digicob.home.transactions.cash_transfer.CashTransferFragment
 import com.finwin.doorstep.digicob.home.transactions.cash_withdrawal.CashWithdrawalFragment
 
 class TransactionsFragment : Fragment() {
@@ -56,17 +56,17 @@ class TransactionsFragment : Fragment() {
 
                     val myFragment: Fragment = CashDepositFragment()
                     activity?.supportFragmentManager?.beginTransaction()
-                        ?.add(R.id.frame_layout, myFragment)?.addToBackStack(null)?.commit()
+                        ?.replace(R.id.frame_layout, myFragment)?.addToBackStack(null)?.commit()
                 }
                 TransactionAction.CLICK_CASH_WITHDRAWAL -> {
                     val myFragment: Fragment = CashWithdrawalFragment()
                     activity?.supportFragmentManager?.beginTransaction()
-                        ?.add(R.id.frame_layout, myFragment)?.addToBackStack(null)?.commit()
+                        ?.replace(R.id.frame_layout, myFragment)?.addToBackStack(null)?.commit()
                 }
                 TransactionAction.CLICK_TRANSFER -> {
-                    val myFragment: Fragment = Cash_TransferFragment()
+                    val myFragment: Fragment = CashTransferFragment()
                     activity?.supportFragmentManager?.beginTransaction()
-                        ?.add(R.id.frame_layout, myFragment)?.addToBackStack(null)?.commit()
+                        ?.replace(R.id.frame_layout, myFragment)?.addToBackStack(null)?.commit()
                 }
             }
 

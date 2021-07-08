@@ -12,6 +12,8 @@ import com.finwin.doorstep.digicob.home.jlg.split_transaction.pojo.CodeMasterRes
 import com.finwin.doorstep.digicob.home.jlg.split_transaction.pojo.GroupAccountDetails
 import com.finwin.doorstep.digicob.home.transactions.cash_deposit.pojo.CashDepositResponse
 import com.finwin.doorstep.digicob.home.transactions.cash_deposit.pojo.GetAccountHolderResponse
+import com.finwin.doorstep.digicob.home.transactions.cash_transfer.pojo.CashTransferResponse
+import com.finwin.doorstep.digicob.home.transactions.cash_transfer.pojo.OtpGenerateResponse
 import com.finwin.doorstep.digicob.home.transactions.cash_withdrawal.pojo.CashWithdrawalResponse
 import com.finwin.doorstep.digicob.home.transactions.cash_withdrawal.pojo.OtpResponse
 import com.finwin.doorstep.digicob.home.transactions.search_account.SearchResponse
@@ -95,7 +97,13 @@ interface ApiInterface {
     @POST("OTPCreation")
     fun validateOtp(@Body body: RequestBody?): Single<ValidateOtpResponse?>?
 
+    @POST("OTPCreation")
+    fun otpGenerate(@Body body: RequestBody?): Single<OtpGenerateResponse?>?
 
     @POST("getAccountHolder")
     suspend fun getAccount(@Body body: RequestBody?): GetAccountHolderResponse
+
+
+    @POST("cashTransfer")
+    fun cashTransfer(@Body body: RequestBody?): Single<CashTransferResponse?>?
 }

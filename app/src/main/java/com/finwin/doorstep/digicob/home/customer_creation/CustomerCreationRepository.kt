@@ -2,6 +2,7 @@ package com.finwin.doorstep.digicob.home.customer_creation
 
 import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
+import com.finwin.doorstep.digicob.home.agent_management.change_password.action.ChangePasswordAction
 import com.finwin.doorstep.digicob.home.customer_creation.action.CustomerCretaionAction
 import com.finwin.doorstep.digicob.retrofit.ApiInterface
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -14,9 +15,9 @@ class CustomerCreationRepository {
 
     lateinit var mAction: MutableLiveData<CustomerCretaionAction>
     lateinit var INSTANCE: CustomerCreationRepository
-    public fun getInstance () : CustomerCreationRepository {
+    public fun getInstance(): CustomerCreationRepository {
         if (!::INSTANCE.isInitialized) {
-            INSTANCE= CustomerCreationRepository()
+            INSTANCE = CustomerCreationRepository()
         }
         return INSTANCE
 
@@ -42,11 +43,44 @@ class CustomerCreationRepository {
                         )
                     }
                 }, { error ->
-                    mAction.value =
-                        CustomerCretaionAction(
-                            CustomerCretaionAction.API_ERROR,
-                            error.message.toString()
-                        )
+                    when (error) {
+                        is SocketTimeoutException -> {
+                            mAction.value = CustomerCretaionAction(
+                                CustomerCretaionAction.API_ERROR,
+                                "Timeout! Please try again later"
+                            )
+                        }
+                        is UnknownHostException -> {
+                            mAction.value = CustomerCretaionAction(
+                                CustomerCretaionAction.API_ERROR,
+                                "No Internet"
+                            )
+                        }
+                        else -> {
+                            when (error) {
+                                is SocketTimeoutException -> {
+                                    mAction.value = CustomerCretaionAction(
+                                        CustomerCretaionAction.API_ERROR,
+                                        "Timeout! Please try again later"
+                                    )
+                                }
+                                is UnknownHostException -> {
+                                    mAction.value = CustomerCretaionAction(
+                                        CustomerCretaionAction.API_ERROR,
+                                        "No Internet"
+                                    )
+                                }
+                                else -> {
+                                    mAction.value =
+                                        CustomerCretaionAction(
+                                            CustomerCretaionAction.API_ERROR,
+                                            error.message.toString()
+                                        )
+                                }
+                            }
+                        }
+                    }
+
                 }
             )
 
@@ -133,11 +167,45 @@ class CustomerCreationRepository {
                         CustomerCretaionAction(CustomerCretaionAction.API_ERROR, e.localizedMessage)
                     }
                 }, { error ->
-                    mAction.value =
-                        CustomerCretaionAction(
-                            CustomerCretaionAction.API_ERROR,
-                            error.message.toString()
-                        )
+                    when (error) {
+                        is SocketTimeoutException -> {
+                            mAction.value =
+                                CustomerCretaionAction(
+                                    CustomerCretaionAction.API_ERROR,
+                                    "Timeout! Please try again later"
+                                )
+                        }
+                        is UnknownHostException -> {
+                            mAction.value =
+                                CustomerCretaionAction(
+                                    CustomerCretaionAction.API_ERROR,
+                                    "No Internet"
+                                )
+                        }
+                        else -> {
+                            when (error) {
+                                is SocketTimeoutException -> {
+                                    mAction.value = CustomerCretaionAction(
+                                        CustomerCretaionAction.API_ERROR,
+                                        "Timeout! Please try again later"
+                                    )
+                                }
+                                is UnknownHostException -> {
+                                    mAction.value = CustomerCretaionAction(
+                                        CustomerCretaionAction.API_ERROR,
+                                        "No Internet"
+                                    )
+                                }
+                                else -> {
+                                    mAction.value =
+                                        CustomerCretaionAction(
+                                            CustomerCretaionAction.API_ERROR,
+                                            error.message.toString()
+                                        )
+                                }
+                            }
+                        }
+                    }
                 }
             )
 
@@ -151,16 +219,16 @@ class CustomerCreationRepository {
                 { response ->
                     try {
 
-                            if (response?.otp?.status == "Y") {
-                                mAction.value = CustomerCretaionAction(
-                                    CustomerCretaionAction.VALIDATE_OTP_SUCCESS,
-                                    response
-                                )
-                            } else if (response?.otp?.status == "N") {
-                                mAction.value = CustomerCretaionAction(
-                                    CustomerCretaionAction.API_ERROR,
-                                    response.otp.Msg
-                                )
+                        if (response?.otp?.status == "Y") {
+                            mAction.value = CustomerCretaionAction(
+                                CustomerCretaionAction.VALIDATE_OTP_SUCCESS,
+                                response
+                            )
+                        } else if (response?.otp?.status == "N") {
+                            mAction.value = CustomerCretaionAction(
+                                CustomerCretaionAction.API_ERROR,
+                                response.otp.Msg
+                            )
 
                         } else {
 
@@ -175,11 +243,27 @@ class CustomerCreationRepository {
                         CustomerCretaionAction(CustomerCretaionAction.API_ERROR, e.localizedMessage)
                     }
                 }, { error ->
-                    mAction.value =
-                        CustomerCretaionAction(
-                            CustomerCretaionAction.API_ERROR,
-                            error.message.toString()
-                        )
+                    when (error) {
+                        is SocketTimeoutException -> {
+                            mAction.value = CustomerCretaionAction(
+                                CustomerCretaionAction.API_ERROR,
+                                "Timeout! Please try again later"
+                            )
+                        }
+                        is UnknownHostException -> {
+                            mAction.value = CustomerCretaionAction(
+                                CustomerCretaionAction.API_ERROR,
+                                "No Internet"
+                            )
+                        }
+                        else -> {
+                            mAction.value =
+                                CustomerCretaionAction(
+                                    CustomerCretaionAction.API_ERROR,
+                                    error.message.toString()
+                                )
+                        }
+                    }
                 }
             )
 
@@ -193,16 +277,16 @@ class CustomerCreationRepository {
                 { response ->
                     try {
 
-                            if (response?.otp?.status == "Y") {
-                                mAction.value = CustomerCretaionAction(
-                                    CustomerCretaionAction.SENT_OTP_SUCCESS,
-                                    response
-                                )
-                            } else if (response?.otp?.status == "N") {
-                                mAction.value = CustomerCretaionAction(
-                                    CustomerCretaionAction.API_ERROR,
-                                    response.otp.Msg
-                                )
+                        if (response?.otp?.status == "Y") {
+                            mAction.value = CustomerCretaionAction(
+                                CustomerCretaionAction.SENT_OTP_SUCCESS,
+                                response
+                            )
+                        } else if (response?.otp?.status == "N") {
+                            mAction.value = CustomerCretaionAction(
+                                CustomerCretaionAction.API_ERROR,
+                                response.otp.Msg
+                            )
 
                         } else {
 
@@ -217,11 +301,28 @@ class CustomerCreationRepository {
                         CustomerCretaionAction(CustomerCretaionAction.API_ERROR, e.localizedMessage)
                     }
                 }, { error ->
-                    mAction.value =
-                        CustomerCretaionAction(
-                            CustomerCretaionAction.API_ERROR,
-                            error.message.toString()
-                        )
+                    when (error) {
+                        is SocketTimeoutException -> {
+                            mAction.value = CustomerCretaionAction(
+                                CustomerCretaionAction.API_ERROR,
+                                "Timeout! Please try again later"
+                            )
+                        }
+                        is UnknownHostException -> {
+                            mAction.value = CustomerCretaionAction(
+                                CustomerCretaionAction.API_ERROR,
+                                "No Internet"
+                            )
+                        }
+                        else -> {
+                            mAction.value =
+                                CustomerCretaionAction(
+                                    CustomerCretaionAction.API_ERROR,
+                                    error.message.toString()
+                                )
+                        }
+                    }
+
                 }
             )
 

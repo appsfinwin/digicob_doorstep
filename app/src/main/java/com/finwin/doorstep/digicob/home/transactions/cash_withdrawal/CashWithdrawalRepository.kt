@@ -2,11 +2,13 @@ package com.finwin.doorstep.digicob.home.transactions.cash_withdrawal
 
 import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
-import com.finwin.doorstep.digicob.retrofit.ApiInterface
 import com.finwin.doorstep.digicob.home.transactions.cash_withdrawal.action.CashWithdrawalAction
+import com.finwin.doorstep.digicob.retrofit.ApiInterface
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import okhttp3.RequestBody
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 
 class CashWithdrawalRepository {
     lateinit var mAction: MutableLiveData<CashWithdrawalAction>
@@ -25,11 +27,31 @@ class CashWithdrawalRepository {
                         )
                     } else {
 
-                        mAction.value = CashWithdrawalAction(CashWithdrawalAction.API_ERROR, response)
+                        mAction.value =
+                            CashWithdrawalAction(CashWithdrawalAction.API_ERROR, response)
                     }
                 }, { error ->
-                    mAction.value =
-                        CashWithdrawalAction(CashWithdrawalAction.API_ERROR, error.message.toString())
+                    when (error) {
+                        is SocketTimeoutException -> {
+                            mAction.value = CashWithdrawalAction(
+                                CashWithdrawalAction.API_ERROR,
+                                "Timeout! Please try again later"
+                            )
+                        }
+                        is UnknownHostException -> {
+                            mAction.value = CashWithdrawalAction(
+                                CashWithdrawalAction.API_ERROR,
+                                "No Internet"
+                            )
+                        }
+                        else -> {
+                            mAction.value =
+                                CashWithdrawalAction(
+                                    CashWithdrawalAction.API_ERROR,
+                                    error.message.toString()
+                                )
+                        }
+                    }
                 }
             )
 
@@ -49,11 +71,31 @@ class CashWithdrawalRepository {
                         )
                     } else {
 
-                        mAction.value = CashWithdrawalAction(CashWithdrawalAction.API_ERROR, response.otp.error)
+                        mAction.value =
+                            CashWithdrawalAction(CashWithdrawalAction.API_ERROR, response.otp.error)
                     }
                 }, { error ->
-                    mAction.value =
-                        CashWithdrawalAction(CashWithdrawalAction.API_ERROR, error.message.toString())
+                    when (error) {
+                        is SocketTimeoutException -> {
+                            mAction.value = CashWithdrawalAction(
+                                CashWithdrawalAction.API_ERROR,
+                                "Timeout! Please try again later"
+                            )
+                        }
+                        is UnknownHostException -> {
+                            mAction.value = CashWithdrawalAction(
+                                CashWithdrawalAction.API_ERROR,
+                                "No Internet"
+                            )
+                        }
+                        else -> {
+                            mAction.value =
+                                CashWithdrawalAction(
+                                    CashWithdrawalAction.API_ERROR,
+                                    error.message.toString()
+                                )
+                        }
+                    }
                 }
             )
 
@@ -73,11 +115,32 @@ class CashWithdrawalRepository {
                             response
                         )
                     } else {
-                        mAction.value = CashWithdrawalAction(CashWithdrawalAction.API_ERROR, "Error")
+                        mAction.value =
+                            CashWithdrawalAction(CashWithdrawalAction.API_ERROR, "Error")
                     }
                 }, { error ->
-                    mAction.value =
-                        CashWithdrawalAction(CashWithdrawalAction.API_ERROR, error.message.toString())
+                    when (error) {
+                        is SocketTimeoutException -> {
+                            mAction.value = CashWithdrawalAction(
+                                CashWithdrawalAction.API_ERROR,
+                                "Timeout! Please try again later"
+                            )
+                        }
+                        is UnknownHostException -> {
+                            mAction.value = CashWithdrawalAction(
+                                CashWithdrawalAction.API_ERROR,
+                                "No Internet"
+                            )
+                        }
+                        else -> {
+                            mAction.value =
+                                CashWithdrawalAction(
+                                    CashWithdrawalAction.API_ERROR,
+                                    error.message.toString()
+                                )
+                        }
+                    }
+
                 }
             )
 

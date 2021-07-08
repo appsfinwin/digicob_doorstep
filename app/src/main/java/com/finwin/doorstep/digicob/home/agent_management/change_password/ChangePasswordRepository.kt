@@ -4,9 +4,13 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import com.finwin.doorstep.digicob.retrofit.ApiInterface
 import com.finwin.doorstep.digicob.home.agent_management.change_password.action.ChangePasswordAction
+import com.finwin.doorstep.digicob.home.transactions.cash_transfer.CashTransferAction
+import com.finwin.doorstep.digicob.home.transactions.cash_transfer.CashTransferRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import okhttp3.RequestBody
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 
 class ChangePasswordRepository {
 
@@ -30,9 +34,28 @@ class ChangePasswordRepository {
                         mAction.value = ChangePasswordAction(ChangePasswordAction.API_ERROR, response.msg)
                     }
                 }, { error ->
-                    mAction.value =
-                        ChangePasswordAction(ChangePasswordAction.API_ERROR, error.message.toString())
-                }
+                    when (error) {
+                        is SocketTimeoutException -> {
+                            mAction.value = ChangePasswordAction(
+                                ChangePasswordAction.API_ERROR,
+                                "Timeout! Please try again later"
+                            )
+                        }
+                        is UnknownHostException -> {
+                            mAction.value = ChangePasswordAction(
+                                ChangePasswordAction.API_ERROR,
+                                "No Internet"
+                            )
+                        }
+                        else -> {
+                            mAction.value =
+                                ChangePasswordAction(
+                                    ChangePasswordAction.API_ERROR,
+                                    error.message.toString()
+                                )
+                        }
+                    }
+                     }
             )
 
     }

@@ -8,7 +8,7 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "com.finwin.doorstep.travancore"
+        applicationId "com.finwin.doorstep.digicob"
         minSdkVersion 25
         targetSdkVersion 29
         versionCode 1

@@ -2,11 +2,14 @@ package com.finwin.doorstep.digicob.login
 
 import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
+import com.finwin.doorstep.digicob.home.agent_management.change_password.action.ChangePasswordAction
 import com.finwin.doorstep.digicob.login.action.LoginAction
 import com.finwin.doorstep.digicob.retrofit.ApiInterface
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import okhttp3.RequestBody
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 
 class LoginRepository(
     public var mAction: MutableLiveData<LoginAction>
@@ -24,7 +27,29 @@ class LoginRepository(
                     mAction.value = LoginAction(LoginAction.LOGIN_ERROR,loginResponse.user.error)
                 }
             }, { error ->
-                mAction.value = LoginAction(LoginAction.API_ERROR, error.message.toString())
+
+                    when (error) {
+                        is SocketTimeoutException -> {
+                            mAction.value = LoginAction(
+                                LoginAction.API_ERROR,
+                                "Timeout! Please try again later"
+                            )
+                        }
+                        is UnknownHostException -> {
+                            mAction.value = LoginAction(
+                                LoginAction.API_ERROR,
+                                "No Internet"
+                            )
+                        }
+                        else -> {
+                            mAction.value =
+                                LoginAction(
+                                    LoginAction.API_ERROR,
+                                    error.message.toString()
+                                )
+                        }
+                    }
+
             }
             )
 
@@ -43,7 +68,27 @@ class LoginRepository(
                     mAction.value = LoginAction(LoginAction.API_ERROR,"error")
                 }
             }, { error ->
-                mAction.value = LoginAction(LoginAction.API_ERROR, error.message.toString())
+                    when (error) {
+                        is SocketTimeoutException -> {
+                            mAction.value = LoginAction(
+                                LoginAction.API_ERROR,
+                                "Timeout! Please try again later"
+                            )
+                        }
+                        is UnknownHostException -> {
+                            mAction.value = LoginAction(
+                                LoginAction.API_ERROR,
+                                "No Internet"
+                            )
+                        }
+                        else -> {
+                            mAction.value =
+                                LoginAction(
+                                    LoginAction.API_ERROR,
+                                    error.message.toString()
+                                )
+                        }
+                    }
             }
             )
 
