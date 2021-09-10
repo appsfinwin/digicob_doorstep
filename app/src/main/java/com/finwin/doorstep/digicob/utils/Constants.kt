@@ -22,6 +22,10 @@ class Constants {
         const val CASH_DEPOSIT: String="CASH_DEPOSIT"
         const val BALANCE_ENQUIRY: String="BALANCE_ENQUIRY"
         const val JLG_FRAGMENT_STATUS: String="JLG_FRAGMENT_STATUS"
+        const val JLG_SCHEME_CODE: String="JLG_SCHEME_CODE"
+        const val JLG_EMI_TYPE: String="JLG_EMI_TYPE"
+        const val BACKGROUND_TIME: String="BACKGROUND_TIME"
+        const val IS_LOGIN: String="IS_LOGIN"
         var INTENT_RECIEPT_FROM_CASH_DEPOSIT:Int =1
         var INTENT_SEARCH_ACCOUNT_FROM_CASH_DEPOSIT:Int =2
         var INTENT_RECIEPT_FROM_CASH_WITHDRAWAL:Int =3
@@ -33,5 +37,10 @@ class Constants {
         var INTENT_SEARCH_ACCOUNT_FROM_JLG:Int =9
         var INTENT_SEARCH_ACCOUNT_FOR_CREDIT_ACCOUNT:Int =10
         var INTENT_SEARCH_ACCOUNT_FOR_DEBIT_ACCOUNT:Int =11
+        var INTENT_SEARCH_ACCOUNT_FROM_LOAN_COLLECTION:Int =12
+        var INTENT_SEARCH_CENTER:Int =13
+        var INTENT_SEARCH_MEMBER:Int =14
+        var INTENT_SEARCH_JLG_GROUP:Int =15
+        var INTENT_SEARCH_ACCOUNT_FROM_JLG_LOAN_CREATION:Int =16
     }
 }

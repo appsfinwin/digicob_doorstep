@@ -8,7 +8,7 @@ import com.finwin.doorstep.digicob.home.transactions.search_account.SearchData
 import com.finwin.doorstep.digicob.databinding.ItemSearchLayoutBinding
 
 class SearchItemViewmodel(
-    binding: ItemSearchLayoutBinding,
+
     searchData: SearchData,
     mAction: MutableLiveData<SearchAction>
 ) : BaseObservable() {

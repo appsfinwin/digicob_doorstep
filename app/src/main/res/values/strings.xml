@@ -77,7 +77,16 @@
     <string name="general_details">General Details</string>
     <string name="remittance_details">Remittance Details</string>
     <string name="other_details">Other Details</string>
+    <string name="select_group">Select Group</string>
+    <string name="loan_details">Loan Details</string>
     <string name="ifsc_code">IFSC Code</string>
     <string name="mobile_number">Mobile Number</string>
+
+    <string name="maker_id">Maker ID</string>
+    <string name="making_time">Making Time</string>
+    <string name="enter_customer_id">Enter Customer ID</string>
+    <string name="create_group">create group</string>
+    <string name="group_name">Group Name</string>
+
 
 </resources>

@@ -19,12 +19,12 @@ class CenterItemViewModel(
 
     public fun clickRemove(view: View)
     {
-        //mAction.value= JlgAction(JlgAction.JLG_CLICK_DELETE_CENTER,centerData)
+        mAction.value= JlgAction(JlgAction.JLG_CLICK_DELETE_CENTER,centerData)
     }
 
     public fun clickEdit(view: View)
     {
-       // mAction.value=JlgAction(JlgAction.JLG_CLICK_EDIT_CENTER,centerData)
+        mAction.value=JlgAction(JlgAction.JLG_CLICK_EDIT_CENTER,centerData)
     }
 
 }

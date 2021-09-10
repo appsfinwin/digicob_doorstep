@@ -13,15 +13,19 @@ import androidx.lifecycle.Observer
 import com.finwin.doorstep.digicob.R
 import com.finwin.doorstep.digicob.databinding.JlgFragmentBinding
 import com.finwin.doorstep.digicob.home.jlg.jlg_center_creation.JlgCenterCreationFragment
+import com.finwin.doorstep.digicob.home.jlg.jlg_group_creation.JlgGroupCreationFragment
+import com.finwin.doorstep.digicob.home.jlg.jlg_loan_creation.JlgLoanCreationActivity
 import com.finwin.doorstep.digicob.home.jlg.split_transaction.SplitTransactionActivity
 
 class JlgFragment : Fragment() {
 
     companion object {
         fun newInstance() = JlgFragment()
-        var CLICK_CENTER_CREATION: Int=1
-        var CLICK_SPLIT_TRANSACTIONS: Int=2
-        var DEFAULT: Int=-1
+        var CLICK_CENTER_CREATION: Int = 1
+        var CLICK_SPLIT_TRANSACTIONS: Int = 2
+        var CLICK_GROUP_CREATION: Int = 3
+        var CLICK_JLG_LOAN_CREATION: Int = 4
+        var DEFAULT: Int = -1
     }
 
     private lateinit var viewModel: JlgViewModel
@@ -31,9 +35,9 @@ class JlgFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding= DataBindingUtil.inflate(inflater, R.layout.jlg_fragment, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.jlg_fragment, container, false)
         viewModel = ViewModelProviders.of(this).get(JlgViewModel::class.java)
-        binding.viewModel=viewModel
+        binding.viewModel = viewModel
 
         return binding.root
     }
@@ -41,30 +45,40 @@ class JlgFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-       viewModel.mAction.observe(viewLifecycleOwner, Observer {
-           when(it)
-           {
-               CLICK_CENTER_CREATION ->
-               {
-                   val myFragment: Fragment =
-                       JlgCenterCreationFragment.newInstance()
-                       activity?.getSupportFragmentManager()?.beginTransaction()?.replace(
-                       R.id.frame_layout,
-                       myFragment
-                   )?.addToBackStack(null)?.commit()
-               }
+        viewModel.mAction.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                CLICK_CENTER_CREATION -> {
+                    val myFragment: Fragment =
+                        JlgCenterCreationFragment.newInstance()
+                    activity?.getSupportFragmentManager()?.beginTransaction()?.replace(
+                        R.id.frame_layout,
+                        myFragment
+                    )?.addToBackStack(null)?.commit()
+                }
+                CLICK_GROUP_CREATION -> {
+                    val myFragment: Fragment =
+                        JlgGroupCreationFragment.newInstance()
+                    activity?.getSupportFragmentManager()?.beginTransaction()?.replace(
+                        R.id.frame_layout,
+                        myFragment
+                    )?.addToBackStack(null)?.commit()
+                }
+                CLICK_JLG_LOAN_CREATION -> {
+                    var intent = Intent(activity, JlgLoanCreationActivity::class.java)
+                    startActivity(intent)
+                }
 
-               CLICK_SPLIT_TRANSACTIONS ->
-               {
-                   var  intent=Intent(activity, SplitTransactionActivity::class.java)
-                   startActivity(intent)
-               }
-           }
-       })
+                CLICK_SPLIT_TRANSACTIONS -> {
+                    var intent = Intent(activity, SplitTransactionActivity::class.java)
+                    startActivity(intent)
+                }
+            }
+        })
     }
+
     override fun onStop() {
         super.onStop()
-        viewModel.mAction.value= DEFAULT
+        viewModel.mAction.value = DEFAULT
     }
 
 }

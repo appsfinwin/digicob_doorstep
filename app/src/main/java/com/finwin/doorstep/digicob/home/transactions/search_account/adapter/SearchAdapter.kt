@@ -57,14 +57,10 @@ class SearchAdapter() : RecyclerView.Adapter<Viewholder>() {
             mAction: MutableLiveData<SearchAction>
         )
         {
-
-            if (binding.viewmodel==null)
-            {
-               binding.viewmodel= SearchItemViewmodel(binding,searchData,mAction)
-            }else{
-
-               // binding.viewmodel.setData(searchData)
+            binding.apply {
+                this.viewmodel= SearchItemViewmodel(searchData,mAction)
             }
+
         }
     }
 

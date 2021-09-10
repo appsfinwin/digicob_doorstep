@@ -12,9 +12,10 @@ import com.finwin.doorstep.digicob.home.jlg.split_transaction.pojo.Dat
 
 import com.finwin.doorstep.digicob.R
 import com.finwin.doorstep.digicob.databinding.ActivitySplitTransactionBinding
+import com.finwin.doorstep.digicob.logout_listner.BaseActivity
 import com.finwin.doorstep.digicob.utils.CustomViewPager
 
-class SplitTransactionActivity : AppCompatActivity() {
+class SplitTransactionActivity : BaseActivity() {
     lateinit var tabs: TabLayout
     lateinit var viewPager: CustomViewPager
     lateinit var viewModel: SplitTransactionViewmodel
@@ -31,14 +32,14 @@ class SplitTransactionActivity : AppCompatActivity() {
 
         val sectionsPagerAdapter = SectionsPagerAdapter(
             this,
-            supportFragmentManager,
-            viewModel.mAction
+            supportFragmentManager
+            //, viewModel.mAction
         )
         viewPager =binding.viewPager
 
-        viewPager.setAdapter(sectionsPagerAdapter)
+        viewPager.adapter = sectionsPagerAdapter
         tabs =binding.tabs
-        viewPager.setOffscreenPageLimit(3)
+        viewPager.offscreenPageLimit = 3
 
         tabs.setupWithViewPager(viewPager)
 

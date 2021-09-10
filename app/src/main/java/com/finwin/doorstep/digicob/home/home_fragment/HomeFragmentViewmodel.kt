@@ -45,7 +45,7 @@ class HomeFragmentViewmodel : ViewModel() {
         )
     }
 
-    fun clickSupport(view : View)
+    fun clickJlg(view : View)
     {
         mAction.value= HomeAction(
             HomeAction.CLICK_JLG

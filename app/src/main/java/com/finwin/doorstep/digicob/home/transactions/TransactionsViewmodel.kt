@@ -22,6 +22,21 @@ class TransactionsViewmodel :ViewModel() {
         mAction.value= TransactionAction(TransactionAction.CLICK_TRANSFER)
     }
 
+    fun clickTNeft(view:View)
+    {
+        mAction.value= TransactionAction(TransactionAction.CLICK_NEFT)
+    }
+
+    fun clickLoanClosing(view:View)
+    {
+        mAction.value= TransactionAction(TransactionAction.CLICK_LOAN_CLOSING)
+    }
+
+    fun clickLoanCollection(view:View)
+    {
+        mAction.value= TransactionAction(TransactionAction.CLICK_LOAN_COLLECTION)
+    }
+
     override fun onCleared() {
         super.onCleared()
         mAction.value= TransactionAction(TransactionAction.DEFAULT)

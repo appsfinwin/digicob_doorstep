@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import cn.pedant.SweetAlert.SweetAlertDialog
 
 import com.finwin.doorstep.digicob.R
 import com.finwin.doorstep.digicob.databinding.BalanceEnquiryFragmentBinding
@@ -50,7 +51,18 @@ class BalanceEnquiryFragment : Fragment() {
             when(it.action)
             {
                
-                BalanceAction.API_ERROR->{}
+                BalanceAction.API_ERROR->{
+                    var dialog: SweetAlertDialog = SweetAlertDialog(activity, SweetAlertDialog.WARNING_TYPE)
+                    dialog.titleText = "ERROR!"
+                    dialog.contentText = it.error
+                    dialog.setCancelable(false)
+                    dialog.setConfirmClickListener {
+                        getFragmentManager()?.popBackStack();
+                        it.cancel()
+                    }
+
+                    dialog.show()
+                }
                 BalanceAction.CLICK_SEARCH->
                 {
                     var intent = Intent(activity, SearchActivity::class.java)

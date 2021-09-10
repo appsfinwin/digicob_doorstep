@@ -26,12 +26,13 @@ import com.finwin.doorstep.digicob.home.jlg.JlgFragment
 import com.finwin.doorstep.digicob.home.support.SupportFragment
 import com.finwin.doorstep.digicob.home.transactions.TransactionsFragment
 import com.finwin.doorstep.digicob.login.LoginActivity
+import com.finwin.doorstep.digicob.logout_listner.BaseActivity
 import com.finwin.doorstep.digicob.utils.Constants
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : BaseActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     //lateinit var activityHomeBinding:ActivityHomeBinding

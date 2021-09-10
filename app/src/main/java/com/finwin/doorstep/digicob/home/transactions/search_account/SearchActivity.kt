@@ -13,8 +13,9 @@ import com.finwin.doorstep.digicob.home.transactions.search_account.adapter.Sear
 
 import com.finwin.doorstep.digicob.R
 import com.finwin.doorstep.digicob.databinding.ActivitySearchBinding
+import com.finwin.doorstep.digicob.logout_listner.BaseActivity
 
-class SearchActivity : AppCompatActivity() {
+class SearchActivity : BaseActivity() {
 
     lateinit var binding: ActivitySearchBinding
     lateinit var viewmodel: SearchViewmodel

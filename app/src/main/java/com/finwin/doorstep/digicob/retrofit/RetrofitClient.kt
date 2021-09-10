@@ -22,9 +22,9 @@ class RetrofitClient {
                 .build()
 
             instance = Retrofit.Builder()
-               .baseUrl("http://doorstep.tunl.digicob.in/")
+               //.baseUrl("http://doorstep.tunl.digicob.in/")// thirukochi
                //.baseUrl("http://www.finwintechnologies.com:8888/")
-                //.baseUrl("http://192.168.0.221:169/")
+                .baseUrl("http://192.168.0.221:169/")//local
                 //.baseUrl("http://doorstep.tunl.digicob.in/")
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
@@ -37,7 +37,7 @@ class RetrofitClient {
     public fun RetrofitClientPostOfiice(): Retrofit? {
         if (retrofitPostOfiice == null) {
             val interceptor = HttpLoggingInterceptor()
-            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+            interceptor.apply { interceptor.level = HttpLoggingInterceptor.Level.BODY }
             val client: OkHttpClient = OkHttpClient.Builder()
                 .addInterceptor(interceptor)
                 .readTimeout(15, TimeUnit.SECONDS)

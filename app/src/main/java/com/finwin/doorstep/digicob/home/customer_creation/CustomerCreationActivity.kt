@@ -21,12 +21,13 @@ import com.finwin.doorstep.digicob.databinding.ActivityCustomerCreationBinding
 import com.finwin.doorstep.digicob.home.customer_creation.action.CustomerCretaionAction
 import com.finwin.doorstep.digicob.home.customer_creation.select_image.ImageActivity
 import com.finwin.doorstep.digicob.home.home_activity.HomeActivity
+import com.finwin.doorstep.digicob.logout_listner.BaseActivity
 import java.io.File
 import java.io.FileInputStream
 import java.util.*
 
 
-class CustomerCreationActivity : AppCompatActivity() {
+class CustomerCreationActivity : BaseActivity() {
     val REQUEST_ID_MULTIPLE_PERMISSIONS = 1
     val REQUEST_CODE_PROFILE_IC = 111
     val REQUEST_CODE_SIGNATURE = 112
@@ -144,10 +145,16 @@ class CustomerCreationActivity : AppCompatActivity() {
                 }
 
                 CustomerCretaionAction.API_ERROR -> {
-                    SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
-                        .setTitleText("Error")
-                        .setContentText(it.error)
-                        .show()
+                    var dialog: SweetAlertDialog = SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                    dialog.titleText = "ERROR!"
+                    dialog.contentText = it.error
+                    dialog.setCancelable(false)
+                    dialog.setConfirmClickListener {
+
+                        it.cancel()
+                    }
+
+                    dialog.show()
                 }
                 CustomerCretaionAction.POST_OFFICE_ERROR -> {
                     SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)

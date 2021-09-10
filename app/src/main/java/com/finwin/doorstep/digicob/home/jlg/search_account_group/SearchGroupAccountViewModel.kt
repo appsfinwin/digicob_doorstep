@@ -18,7 +18,7 @@ import okhttp3.RequestBody
 import org.json.JSONObject
 import java.util.*
 
-class SearchGroupViewModel : ViewModel(), Observable {
+class SearchGroupAccountViewModel : ViewModel(), Observable {
 
     var repository : SearchGroupRepository = SearchGroupRepository().getInstance()
     var mAction: MutableLiveData<JlgAction> = MutableLiveData()

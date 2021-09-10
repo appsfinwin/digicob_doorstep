@@ -18,8 +18,8 @@ import com.finwin.doorstep.digicob.utils.Constants
 
 class SectionsPagerAdapter(
     context: Context,
-    fm: FragmentManager,
-    mAction: MutableLiveData<JlgAction>
+    fm: FragmentManager
+    //, mAction: MutableLiveData<JlgAction>
 ) : FragmentPagerAdapter(fm) {
 
     @StringRes
@@ -46,7 +46,7 @@ class SectionsPagerAdapter(
             )
 
         var  fragment: Fragment= Fragment()
-         status_Completed= sharedPreferences.getInt(Constants.JLG_FRAGMENT_STATUS, 1);
+         //status_Completed= sharedPreferences.getInt(Constants.JLG_FRAGMENT_STATUS, 1);
         when(position)
         {
             0->{fragment=  generalDetailsFragment}

@@ -2,6 +2,8 @@ package com.finwin.doorstep.digicob.utils
 
 
 
+import com.finwin.doorstep.digicob.home.jlg.jlg_loan_creation.jlg_loan_details.pojo.GetLoanPeriodResponse
+import com.finwin.doorstep.digicob.home.jlg.jlg_loan_creation.jlg_loan_details.pojo.LoanPeriodData
 import com.finwin.doorstep.digicob.home.jlg.split_transaction.pojo.Dat
 import com.finwin.doorstep.digicob.login.pojo.getMasters.Data
 import java.util.*
@@ -20,6 +22,7 @@ class DataHolder {
         var accountCtg: List<Data> = ArrayList<Data>()
         var accountRelation: List<Data> = ArrayList<Data>()
         var dat: List<Dat> = ArrayList<Dat>()
+
     }
 
 }

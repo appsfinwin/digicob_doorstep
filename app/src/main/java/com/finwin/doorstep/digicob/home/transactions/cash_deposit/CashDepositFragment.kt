@@ -24,7 +24,9 @@ import com.finwin.doorstep.digicob.R
 import com.finwin.doorstep.digicob.databinding.FragmentCashDepositBinding
 import com.finwin.doorstep.digicob.databinding.LayoutCollectionConfirmationBinding
 import com.finwin.doorstep.digicob.home.home_activity.HomeActivity
+import com.finwin.doorstep.digicob.home.jlg.search_center.SearchCenterActivity
 import com.finwin.doorstep.digicob.home.transactions.cash_deposit.dialog.ConfirmationViewmodel
+import com.finwin.doorstep.digicob.home.transactions.loan_collection.search_loan_number.SearchLoanNumberActivity
 import com.finwin.doorstep.digicob.home.transactions.search_account.SearchActivity
 import com.finwin.doorstep.digicob.print_reciept.ReceiptActivity
 import com.finwin.doorstep.digicob.utils.Constants

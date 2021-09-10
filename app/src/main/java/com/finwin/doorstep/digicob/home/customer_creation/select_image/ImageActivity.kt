@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import com.finwin.doorstep.digicob.R
+import com.finwin.doorstep.digicob.logout_listner.BaseActivity
 import com.github.dhaval2404.imagepicker.ImagePicker
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -25,7 +26,7 @@ import java.util.*
 //import kotlinx.android.synthetic.main.content_gallery_only.*
 //import kotlinx.android.synthetic.main.content_profile.*
 
-class ImageActivity : AppCompatActivity() {
+class ImageActivity : BaseActivity() {
     companion object {
         private const val PROOF_IMAGE_REQ_CODE = 111
         val REQUEST_IMAGE_CAPTURE = 1

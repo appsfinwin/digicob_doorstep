@@ -92,9 +92,9 @@
 
     <style name="buttonTheme" parent="android:Widget.TextView">
         <!-- Set the default global color for TextViews to Holo Blue Dark -->
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textStyle">bold</item>
-        <item name="background">@drawable/bg_login_button</item>
+        <item name="background">@drawable/bg_white_button</item>
     </style>
 
     <style name="spinnerTheme">

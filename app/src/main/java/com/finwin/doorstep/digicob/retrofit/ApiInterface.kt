@@ -7,7 +7,16 @@ import com.finwin.doorstep.digicob.home.enquiry.balance_enquiry.pojo.BalanceEnqu
 import com.finwin.doorstep.digicob.home.enquiry.mini_statement.pojo.MiniStatementResponse
 import com.finwin.doorstep.digicob.home.jlg.jlg_center_creation.pojo.JlgCreateCenterResponse
 import com.finwin.doorstep.digicob.home.jlg.jlg_center_creation.pojo.getjLgCenterResponse
+import com.finwin.doorstep.digicob.home.jlg.jlg_group_creation.pojo.CreateGroupResponse
+import com.finwin.doorstep.digicob.home.jlg.jlg_loan_creation.jlg_loan_details.pojo.GetLoanPeriodResponse
+import com.finwin.doorstep.digicob.home.jlg.jlg_loan_creation.select_group.pojo.CreateJlGLoanResponse
+import com.finwin.doorstep.digicob.home.jlg.jlg_loan_creation.select_group.pojo.GetGroupSelectResponse
+import com.finwin.doorstep.digicob.home.jlg.jlg_loan_creation.select_group.pojo.GetJlgProductResponse
 import com.finwin.doorstep.digicob.home.jlg.search_account_group.pojo.SearchGroupAccountResponse
+import com.finwin.doorstep.digicob.home.jlg.search_center.pojo.GetSearchCenterResponse
+import com.finwin.doorstep.digicob.home.jlg.search_group.pojo.GetCenterByBranchResponse
+import com.finwin.doorstep.digicob.home.jlg.search_group.pojo.GetSearchGroupResponse
+import com.finwin.doorstep.digicob.home.jlg.search_member.pojo.GetSearchMemberResponse
 import com.finwin.doorstep.digicob.home.jlg.split_transaction.pojo.CodeMasterResponse
 import com.finwin.doorstep.digicob.home.jlg.split_transaction.pojo.GroupAccountDetails
 import com.finwin.doorstep.digicob.home.transactions.cash_deposit.pojo.CashDepositResponse
@@ -16,6 +25,9 @@ import com.finwin.doorstep.digicob.home.transactions.cash_transfer.pojo.CashTran
 import com.finwin.doorstep.digicob.home.transactions.cash_transfer.pojo.OtpGenerateResponse
 import com.finwin.doorstep.digicob.home.transactions.cash_withdrawal.pojo.CashWithdrawalResponse
 import com.finwin.doorstep.digicob.home.transactions.cash_withdrawal.pojo.OtpResponse
+import com.finwin.doorstep.digicob.home.transactions.loan_collection.search_loan_number.pojo.DummyData
+import com.finwin.doorstep.digicob.home.transactions.loan_collection.search_loan_number.pojo.GetLoanNumbers
+import com.finwin.doorstep.digicob.home.transactions.loan_collection.search_loan_number.pojo.GetSchemes
 import com.finwin.doorstep.digicob.home.transactions.search_account.SearchResponse
 import com.finwin.doorstep.digicob.login.pojo.LoginResponse
 
@@ -106,4 +118,49 @@ interface ApiInterface {
 
     @POST("cashTransfer")
     fun cashTransfer(@Body body: RequestBody?): Single<CashTransferResponse?>?
+
+    @POST("getLoanCustUnderAgent")
+    fun getSearchLoanNumbers(@Body body: RequestBody?): Single<GetLoanNumbers?>?
+
+    @POST("getLoanScheme")
+    fun getLoanScheme(@Body body: RequestBody?): Single<GetSchemes?>?
+
+    @POST("getLoanAccountHolder")
+    fun getLoanAccountHolder(@Body body: RequestBody?): Single<DummyData?>?
+
+    @POST("LoanCentreSearch")
+    fun getsearchCenter(@Body body: RequestBody?): Single<GetSearchCenterResponse?>?
+
+    @POST("getCustUnderAgentbyCustId")
+    fun getSearchMember(@Body body: RequestBody?): Single<GetSearchMemberResponse?>?
+
+    @POST("JLGLoanGroup")
+    fun createGroup(@Body body: RequestBody?): Single<CreateGroupResponse?>?
+
+    @POST("JLGGroupSelect")
+    fun getGroup(@Body body: RequestBody?): Single<GetGroupSelectResponse?>?
+
+    @POST("SelectGroup")
+    fun getSearchGroup(@Body body: RequestBody?): Single<GetSearchGroupResponse?>?
+
+    @POST("GetAllLoanCentreByBranch")
+    fun getCenterByBranch(@Body body: RequestBody?): Single<GetCenterByBranchResponse?>?
+
+    @POST("JLGLoanPeriod")
+    fun getJlgLoanPeriod(@Body body: RequestBody?): Single<GetLoanPeriodResponse?>?
+
+    @POST("JLGSelectProduct")
+    fun getJlgProducts(@Body body: RequestBody?): Single<GetJlgProductResponse?>?
+
+
+    @POST("LoanMaster")
+    fun createJlgLoan(@Body body: RequestBody?): Single<CreateJlGLoanResponse?>?
+
+
+//    @POST("getLoanAccountHolder")
+//    fun getLoanAccountHolder(@Body body: RequestBody?): Single<GetLoanAccountHolderResponse?>?
+
+//    @POST("getLoanCustUnderAgent")
+//    suspend fun getSearchLoanNumbers(@Body body: RequestBody?) : GetLoanNumbers
+
 }

@@ -415,6 +415,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:visibility="gone"
             android:id="@+id/constraintLayout46"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

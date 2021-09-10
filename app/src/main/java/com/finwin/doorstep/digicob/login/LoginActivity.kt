@@ -19,12 +19,13 @@ import com.finwin.doorstep.digicob.R
 import com.finwin.doorstep.digicob.databinding.ActivityLoginBinding
 import com.finwin.doorstep.digicob.home.home_activity.HomeActivity
 import com.finwin.doorstep.digicob.login.action.LoginAction
+import com.finwin.doorstep.digicob.logout_listner.BaseActivity
 import com.finwin.doorstep.digicob.utils.Constants
 import com.finwin.doorstep.digicob.utils.DataHolder
 import com.finwin.doorstep.digicob.utils.VersionChecker
 import java.util.concurrent.ExecutionException
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity() {
      val viewmodel: LoginViewmodel by viewModels {
          LoginViewmodel.LoginViewmodelFactory()
      }

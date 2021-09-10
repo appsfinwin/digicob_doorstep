@@ -14,6 +14,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
+        android:name=".home.jlg.jlg_loan_creation.room.MemberApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -23,7 +24,26 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:icon">
-        <activity android:name=".home.transactions.neft_imps.add_beneficiary.AddBeneficiaryActivity"></activity>
+        <activity android:name=".home.jlg.search_group.SearchGroupActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme_Material"></activity>
+        <activity
+            android:name=".home.jlg.jlg_loan_creation.JlgLoanCreationActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme_Material" />
+        <activity
+            android:name=".home.jlg.search_center.SearchCenterActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme_Material" />
+        <activity
+            android:name=".home.jlg.search_member.SearchMemberActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme_Material" />
+        <activity
+            android:name=".home.transactions.loan_collection.search_loan_number.SearchLoanNumberActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme_Material" />
+        <activity android:name=".home.transactions.neft_imps.add_beneficiary.AddBeneficiaryActivity" />
         <activity
             android:name=".home.customer_creation.select_image.ImageActivity"
             android:screenOrientation="portrait"
@@ -39,7 +59,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme_Material" />
         <activity
-            android:name=".home.jlg.search_account_group.SearchGroupActivity"
+            android:name=".home.jlg.search_account_group.SearchGroupAccountActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait" />
         <activity

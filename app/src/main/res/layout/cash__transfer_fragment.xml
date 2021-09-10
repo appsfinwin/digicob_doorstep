@@ -33,7 +33,7 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="1200dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
@@ -87,11 +87,11 @@
                                 app:layout_constraintTop_toTopOf="@+id/et_account_layout" />
 
                             <Button
-                                android:layout_marginBottom="10dp"
                                 android:id="@+id/button2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="16dp"
+                                android:layout_marginBottom="10dp"
                                 android:background="@drawable/bg_login_button"
                                 android:onClick="@{viewModel::clickDebitSubmit}"
                                 android:text="Submit"
@@ -252,9 +252,6 @@
                                     app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
                                 <TextView
-                                    android:fontFamily="@font/nunito_regular"
-                                    android:text="Account Balance"
-                                    android:textSize="15dp"
                                     android:id="@+id/textView199"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
@@ -262,6 +259,9 @@
                                     android:layout_marginTop="8dp"
                                     android:layout_marginEnd="8dp"
                                     android:layout_marginBottom="8dp"
+                                    android:fontFamily="@font/nunito_regular"
+                                    android:text="Account Balance"
+                                    android:textSize="15dp"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toStartOf="@+id/view17"
                                     app:layout_constraintStart_toStartOf="parent"
@@ -484,13 +484,13 @@
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <androidx.constraintlayout.widget.ConstraintLayout
-                            android:visibility="@{viewModel.amountLayoutVisibility}"
                             android:id="@+id/constraintLayout50"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
+                            android:visibility="@{viewModel.amountLayoutVisibility}"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/constraintLayout49">
@@ -533,23 +533,23 @@
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <androidx.constraintlayout.widget.ConstraintLayout
-                            android:visibility="@{viewModel.otpLayoutVisibility}"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
+                            android:visibility="@{viewModel.otpLayoutVisibility}"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/constraintLayout50">
 
                             <Button
-                                android:onClick="@{viewModel::clickSubmitOtp}"
                                 android:id="@+id/button25"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
                                 android:layout_marginBottom="8dp"
+                                android:onClick="@{viewModel::clickSubmitOtp}"
                                 android:text="submit otp"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"

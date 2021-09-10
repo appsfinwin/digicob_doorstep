@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
@@ -6,13 +5,16 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.finwin.doorstep.digicob.home.jlg.search_account_group.SearchGroupViewModel" />
+            type="com.finwin.doorstep.digicob.home.transactions.loan_collection.search_loan_number.SearchLoanNumberViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".home.jlg.search_account_group.SearchGroupActivity">
+        android:fitsSystemWindows="true"
+        tools:context=".home.transactions.loan_collection.search_loan_number.SearchLoanNumberActivity">
+
+
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
             android:layout_width="0dp"
@@ -28,23 +30,41 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayout4"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/enter_account_name"
+                        android:text="@={viewmodel.name}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
                 <Spinner
+                    android:entries="@{viewmodel.schemeList}"
+                    android:onItemSelected="@{(parent,view,position,id)->viewmodel.onSelectedScheme(parent,view,position,id)}"
+                    android:selectedItemPosition="@={viewmodel.selectedScheme}"
                     android:id="@+id/spinner"
                     android:layout_width="0dp"
                     android:layout_height="45dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:background="@drawable/bg_spinner"
-                    android:entries="@{viewmodel.branchList}"
-                    android:onItemSelected="@{(parent,view,position,id)->viewmodel.onSelectedBranch(parent,view,position,id)}"
-                    android:selectedItemPosition="@={viewmodel.selectedBranch}"
-                    app:layout_constraintEnd_toEndOf="parent"
+                  app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout4" />
 
                 <Spinner
-                    android:visibility="gone"
                     android:id="@+id/spinner2"
                     android:layout_width="0dp"
                     android:layout_height="45dp"
@@ -52,46 +72,43 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:background="@drawable/bg_spinner"
-
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
                 <Button
-                    android:onClick="@{viewmodel::clickSubmit}"
+                    app:backgroundTint="@null"
                     android:id="@+id/button3"
                     android:layout_width="0dp"
                     android:layout_height="45dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="16dp"
                     android:background="@drawable/bg_login_button"
-
+                    android:onClick="@{viewmodel::clickSearch}"
                     android:text="Submit"
-                    android:textColor="@color/text_color_white"
                     android:textSize="12dp"
-                    app:backgroundTint="@null"
+                    android:textColor="@color/text_color_white"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/button4"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_cancel"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/spinner2" />
 
                 <Button
-                    android:id="@+id/button4"
+                    app:backgroundTint="@null"
+                    android:id="@+id/btn_cancel"
                     android:layout_width="0dp"
                     android:layout_height="45dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="16dp"
                     android:background="@drawable/bg_login_button"
-
                     android:text="Cancel"
-                    android:textColor="@color/text_color_white"
                     android:textSize="12dp"
-                    app:backgroundTint="@null"
+                    android:textColor="@color/text_color_white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -101,7 +118,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_group_accounts"
+            android:id="@+id/rv__loan_accounts"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -110,7 +127,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardView"
             app:layout_constraintVertical_bias="0.0"
-            tools:listitem="@layout/layout_item_search_group" />
+            tools:listitem="@layout/item_search_layout" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout6"

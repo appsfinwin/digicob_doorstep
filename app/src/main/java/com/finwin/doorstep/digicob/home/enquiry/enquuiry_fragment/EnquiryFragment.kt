@@ -1,6 +1,7 @@
 package com.finwin.doorstep.digicob.home.enquiry.enquuiry_fragment
 
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -27,6 +28,7 @@ class EnquiryFragment : Fragment() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,6 +38,7 @@ class EnquiryFragment : Fragment() {
         binding=DataBindingUtil.inflate(inflater, R.layout.fragment_enquiry, container, false)
         viewmodel=ViewModelProvider(this).get(EnquiryViewmodel::class.java)
         binding.viewmodel=viewmodel
+
         HomeActivity.activityHomeBinding.appBar.tvHeading.text = "ENQUIRY"
         return binding.root
 

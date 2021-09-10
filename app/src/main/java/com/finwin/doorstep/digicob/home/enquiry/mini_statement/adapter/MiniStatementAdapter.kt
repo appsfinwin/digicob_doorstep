@@ -102,7 +102,7 @@ class MiniStatementAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         public fun setBindData(get: TRANSACTONS)
         {
             binding.apply {
-                this.viewmodel= MiniStatementItemViewmodel(get, binding, itemView.context)
+                this.viewmodel= MiniStatementItemViewmodel(get, this, itemView.context)
             }
 //            if (binding.viewmodel==null)
 //            {

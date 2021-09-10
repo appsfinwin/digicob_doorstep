@@ -28,6 +28,11 @@ class JlgAction {
         const val SELECT_ACCOUNT: Int = 11
         const val DE_SELECT_ACCOUNT: Int = 12
         const val CLICK_DELETE: Int = 13
+        const val JLG_UPDATE_CENTER: Int = 14
+        const val JLG_CREATE_CENTER: Int = 15
+        const val JLG_GET_CENTER_SUCCESS: Int = 16
+        const val JLG_CLICK_EDIT_CENTER: Int = 17
+        const val JLG_CLICK_DELETE_CENTER: Int = 18
 
     }
 

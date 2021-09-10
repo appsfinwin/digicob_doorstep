@@ -16,10 +16,11 @@ import com.finwin.doorstep.digicob.databinding.ActivityMiniStatementRecieptBindi
 import com.finwin.doorstep.digicob.home.enquiry.mini_statement.action.MiniStatementAction
 import com.finwin.doorstep.digicob.home.enquiry.mini_statement.adapter.MiniStatementAdapter
 import com.finwin.doorstep.digicob.home.enquiry.mini_statement.pojo.MiniStatementProfile
+import com.finwin.doorstep.digicob.logout_listner.BaseActivity
 import com.finwin.doorstep.digicob.utils.Constants
 
 
-class MiniStatementRecieptActivity : AppCompatActivity() {
+class MiniStatementRecieptActivity : BaseActivity() {
     lateinit var viewmodel: MiniStatementReciepViewmodel
     lateinit var binding: ActivityMiniStatementRecieptBinding
     lateinit var adapter: MiniStatementAdapter

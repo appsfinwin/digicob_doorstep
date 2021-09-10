@@ -77,9 +77,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="32dp"
-                                android:layout_marginTop="24dp"
+                                android:layout_marginTop="16dp"
                                 android:layout_marginEnd="32dp"
-                                android:layout_marginBottom="24dp"
+                                android:layout_marginBottom="16dp"
                                 android:fontFamily="@font/nunito_regular"
                                 android:text="@string/cash_deposit"
                                 android:textAllCaps="true"
@@ -125,9 +125,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="32dp"
-                                android:layout_marginTop="24dp"
+                                android:layout_marginTop="16dp"
                                 android:layout_marginEnd="32dp"
-                                android:layout_marginBottom="24dp"
+                                android:layout_marginBottom="16dp"
                                 android:fontFamily="@font/nunito_regular"
                                 android:text="@string/cash_withdrawal"
                                 android:textAllCaps="true"
@@ -140,17 +140,16 @@
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <androidx.constraintlayout.widget.ConstraintLayout
-                            android:visibility="visible"
+                            android:id="@+id/constraintLayout51"
                             android:layout_width="0dp"
-                            android:onClick="@{viewmodel::clickTransfer}"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="50dp"
                             android:layout_marginTop="24dp"
                             android:layout_marginEnd="50dp"
-                            android:layout_marginBottom="32dp"
                             android:background="@drawable/bg_white_button"
                             android:elevation="6dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:onClick="@{viewmodel::clickTransfer}"
+                            android:visibility="visible"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.0"
                             app:layout_constraintStart_toStartOf="parent"
@@ -174,7 +173,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="32dp"
+                                android:layout_marginTop="16dp"
                                 android:layout_marginEnd="32dp"
+                                android:layout_marginBottom="16dp"
                                 android:fontFamily="@font/nunito_regular"
                                 android:text="@string/transfer"
                                 android:textAllCaps="true"
@@ -184,6 +185,143 @@
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toEndOf="@+id/imageView12"
                                 app:layout_constraintTop_toTopOf="parent" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/constraintLayout52"
+                            android:layout_width="0dp"
+                            android:visibility="visible"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="50dp"
+                            android:layout_marginTop="24dp"
+                            android:layout_marginEnd="50dp"
+                            android:background="@drawable/bg_white_button"
+                            android:elevation="6dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/constraintLayout51">
+
+                            <ImageView
+                                android:id="@+id/imageView45"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginBottom="8dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:tint="@color/neavy_blue"
+                                app:srcCompat="@drawable/ic_balance" />
+
+                            <TextView
+                                android:id="@+id/textView202"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="32dp"
+                                android:layout_marginTop="16dp"
+                                android:layout_marginEnd="32dp"
+                                android:layout_marginBottom="16dp"
+                                android:fontFamily="@font/nunito_regular"
+                                android:text="NEFT/IMPS"
+                                android:textAllCaps="true"
+                                android:textColor="@color/neavy_blue"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/imageView45"
+                                app:layout_constraintTop_toTopOf="parent" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:onClick="@{viewmodel::clickLoanCollection}"
+                            android:id="@+id/constraintLayout53"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="50dp"
+                            android:layout_marginTop="24dp"
+                            android:layout_marginEnd="50dp"
+                            android:background="@drawable/bg_white_button"
+                            android:elevation="6dp"
+                            android:visibility="visible"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/constraintLayout52">
+
+                            <TextView
+                                android:id="@+id/textView203"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="16dp"
+                                android:layout_marginBottom="16dp"
+                                android:fontFamily="@font/nunito_regular"
+                                android:text="LOAN COLLECTION"
+                                android:textAllCaps="true"
+                                android:textColor="@color/neavy_blue"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/imageView46"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <ImageView
+                                app:tint="@color/neavy_blue"
+                                android:id="@+id/imageView46"
+                                android:layout_width="wrap_content"
+                                android:layout_height="30dp"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginBottom="8dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/ic_add_deposit" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:onClick="@{viewmodel::clickLoanClosing}"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="50dp"
+                            android:layout_marginTop="24dp"
+                            android:layout_marginEnd="50dp"
+                            android:layout_marginBottom="32dp"
+                            android:background="@drawable/bg_white_button"
+                            android:visibility="visible"
+                            android:elevation="6dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/constraintLayout53">
+
+                            <TextView
+                                android:id="@+id/textView204"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="16dp"
+                                android:layout_marginBottom="16dp"
+                                android:fontFamily="@font/nunito_regular"
+                                android:text="LOAN CLOSING"
+                                android:textAllCaps="true"
+                                android:textColor="@color/neavy_blue"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/imageView47"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <ImageView
+                                app:tint="@color/neavy_blue"
+                                android:id="@+id/imageView47"
+                                android:layout_width="wrap_content"
+                                android:layout_height="30dp"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginBottom="8dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/ic_add_deposit" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>

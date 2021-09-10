@@ -6,11 +6,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.finwin.doorstep.digicob.R
 import com.finwin.doorstep.digicob.databinding.ActivityReceiptBinding
+import com.finwin.doorstep.digicob.logout_listner.BaseActivity
 
 import com.finwin.doorstep.digicob.utils.Constants
 
 
-class ReceiptActivity : AppCompatActivity() {
+class ReceiptActivity : BaseActivity() {
 
     lateinit var binding: ActivityReceiptBinding
     lateinit var viewmodel: RecieptViewmodel

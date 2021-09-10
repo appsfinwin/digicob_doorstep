@@ -1,5 +1,7 @@
 package com.finwin.doorstep.digicob.home.jlg.split_transaction.pojo
 
+import com.google.gson.annotations.SerializedName
+
 data class CodeMasterResponse(
     val Charges: List<Charge>,
     val CollectionStaff: List<CollectionStaff>,
@@ -9,7 +11,9 @@ data class CodeMasterResponse(
     val Scheme: List<Scheme>,
     val Sector: List<Sector>,
     val SubTranType: List<SubTranType>,
-    val Subsector: List<Subsector>,
+
+    @SerializedName("Subsector")
+    val subSector: List<SubSector>,
     val status: String
 )
 
@@ -58,7 +62,7 @@ data class SubTranType(
     val Name: String
 )
 
-data class Subsector(
+data class SubSector(
     val Code: String,
     val Name: String,
     val Type_Code: String

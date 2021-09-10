@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.finwin.doorstep.digicob.home.jlg.JlgAction
-import com.finwin.doorstep.digicob.home.jlg.search_account_group.SearchGroupActivity
+import com.finwin.doorstep.digicob.home.jlg.search_account_group.SearchGroupAccountActivity
 import com.finwin.doorstep.digicob.home.jlg.split_transaction.SplitTransactionActivity
 import com.finwin.doorstep.digicob.home.transactions.search_account.SearchActivity
 import com.finwin.doorstep.digicob.utils.Constants
@@ -60,7 +60,7 @@ class GeneralDetailsFragment : Fragment() {
                 }
 
                 JlgAction.CLICK_SEARCH_GROUP -> {
-                    var intent: Intent = Intent(activity, SearchGroupActivity::class.java)
+                    var intent: Intent = Intent(activity, SearchGroupAccountActivity::class.java)
                     startActivityForResult(intent, Constants.INTENT_SEARCH_GROUP)
                 }
                 JlgAction.JLG_GET_GROUP_ACCOUNT_DETAILS_SUCCESS -> {

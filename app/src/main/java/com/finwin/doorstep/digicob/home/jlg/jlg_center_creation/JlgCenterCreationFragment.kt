@@ -7,8 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import cn.pedant.SweetAlert.SweetAlertDialog
 
 import com.finwin.doorstep.digicob.R
 import com.finwin.doorstep.digicob.databinding.JlgCenterCreationFragmentBinding
@@ -52,78 +54,78 @@ class JlgCenterCreationFragment : Fragment() {
 
     private fun observeAdapter(adapter: JlgCenterAdapter) {
 
-//        adapter.mAction.observe(viewLifecycleOwner, Observer {
-//
-//            when(it.action)
-//            {
-//                JlgAction.JLG_CLICK_EDIT_CENTER->{
-//                    binding.etCenterCode.editText?.isEnabled=false
-//                    binding.etCenterCode.editText?.setText(it.centerData.CenterCode)
-//                    binding.etCenterName.editText?.setText(it.centerData.CenterName)
-//                }
-//                JlgAction.JLG_CLICK_DELETE_CENTER->{}
-//            }
-//        })
+        adapter.mAction.observe(viewLifecycleOwner, Observer {
+
+            when(it.action)
+            {
+                JlgAction.JLG_CLICK_EDIT_CENTER->{
+                    binding.etCenterCode.editText?.isEnabled=false
+                    binding.etCenterCode.editText?.setText(it.centerData.CenterCode)
+                    binding.etCenterName.editText?.setText(it.centerData.CenterName)
+                }
+                JlgAction.JLG_CLICK_DELETE_CENTER->{}
+            }
+        })
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-//            viewModel.mAction.observe(viewLifecycleOwner, Observer {
-//           viewModel.cancelLoading()
-//           when(it.action)
-////           {
-////                JlgAction.JLG_GET_CENTER_SUCCESS->
-////                {
-////                    adapter.setCenterData(it.jlgCenterResponse.data)
-////                    adapter.notifyDataSetChanged()
-////                }
-////               JlgAction.JLG_CREATE_CENTER->
-////               {
-//////                   SweetAlertDialog(activity, SweetAlertDialog.WARNING_TYPE)
-//////                       .setTitleText("ERROR!")
-//////                       .setContentText()
-//////                       .setConfirmClickListener {
-//////
-//////                       }.setCancelClickListener {
-//////                           it.cancel()
-//////                       }
-//////                       .show()
-////
-////                   SweetAlertDialog(activity, SweetAlertDialog.SUCCESS_TYPE)
-////                       .setTitleText("SUCCESS!")
-////                       .setContentText(it.jlgCreateCenterResponse.msg)
-////                       .setConfirmClickListener {
-////                           it.cancel()
-////                           viewModel.initLoading(it.context)
-////                           viewModel.getJlgCenter()
-////                       }
-////                       .show()
-////
-////
-////               }
-////               JlgAction.API_ERROR->{
-////                   SweetAlertDialog(activity, SweetAlertDialog.ERROR_TYPE)
-////                       .setTitleText("ERROR!")
-////                       .setContentText(it.error)
-////                       .show()
-////               }
-////
-////               JlgAction.JLG_UPDATE_CENTER->
-////               {
-////                   SweetAlertDialog(activity, SweetAlertDialog.SUCCESS_TYPE)
-////                       .setTitleText("SUCCESS!")
-////                       .setContentText(it.jlgCreateCenterResponse.msg)
-////                       .setConfirmClickListener {
-////                           it.cancel()
-////                           viewModel.initLoading(it.context)
-////                           viewModel.getJlgCenter()
-////                       }
-////                       .show()
-////                   viewModel.resetText()
-////               }
-////           }
-//       })
+            viewModel.mAction.observe(viewLifecycleOwner, Observer {
+           viewModel.cancelLoading()
+           when(it.action)
+           {
+                JlgAction.JLG_GET_CENTER_SUCCESS->
+                {
+                    adapter.setCenterData(it.jlgCenterResponse.data)
+                    adapter.notifyDataSetChanged()
+                }
+               JlgAction.JLG_CREATE_CENTER->
+               {
+//                   SweetAlertDialog(activity, SweetAlertDialog.WARNING_TYPE)
+//                       .setTitleText("ERROR!")
+//                       .setContentText()
+//                       .setConfirmClickListener {
+//
+//                       }.setCancelClickListener {
+//                           it.cancel()
+//                       }
+//                       .show()
+
+                   SweetAlertDialog(activity, SweetAlertDialog.SUCCESS_TYPE)
+                       .setTitleText("SUCCESS!")
+                       .setContentText(it.jlgCreateCenterResponse.msg)
+                       .setConfirmClickListener {
+                           it.cancel()
+                           viewModel.initLoading(it.context)
+                           viewModel.getJlgCenter()
+                       }
+                       .show()
+
+
+               }
+               JlgAction.API_ERROR->{
+                   SweetAlertDialog(activity, SweetAlertDialog.ERROR_TYPE)
+                       .setTitleText("ERROR!")
+                       .setContentText(it.error)
+                       .show()
+               }
+
+               JlgAction.JLG_UPDATE_CENTER->
+               {
+                   SweetAlertDialog(activity, SweetAlertDialog.SUCCESS_TYPE)
+                       .setTitleText("SUCCESS!")
+                       .setContentText(it.jlgCreateCenterResponse.msg)
+                       .setConfirmClickListener {
+                           it.cancel()
+                           viewModel.initLoading(it.context)
+                           viewModel.getJlgCenter()
+                       }
+                       .show()
+                   viewModel.resetText()
+               }
+           }
+       })
     }
 
     override fun onStop() {

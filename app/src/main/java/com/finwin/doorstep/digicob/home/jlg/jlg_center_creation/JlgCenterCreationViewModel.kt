@@ -53,7 +53,7 @@ class JlgCenterCreationViewModel : ViewModel() {
         )
 
         apiInterface = RetrofitClient().RetrofitClient()?.create(ApiInterface::class.java)!!
-        //repository.getJlgCenter(apiInterface, body)
+        repository.getJlgCenter(apiInterface, body)
     }
 
     public fun createJlgCenter() {
@@ -71,7 +71,7 @@ class JlgCenterCreationViewModel : ViewModel() {
         )
 
         apiInterface = RetrofitClient().RetrofitClient()?.create(ApiInterface::class.java)!!
-       // repository.jlgCreateCenter(apiInterface, body)
+        repository.jlgCreateCenter(apiInterface, body)
     }
 
     public fun clickSubmit(view: View)

@@ -173,7 +173,7 @@
                             app:layout_constraintTop_toBottomOf="@+id/textView122" />
 
                         <Spinner
-                            android:visibility="gone"
+                            android:visibility="visible"
                             android:id="@+id/spinner4"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
