@@ -23,10 +23,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
+        android:windowSoftInputMode="adjustNothing"
         tools:replace="android:icon">
-        <activity android:name=".home.jlg.search_group.SearchGroupActivity"
+        <activity android:name=".home.jlg.jlg_pending_lists.JlgPendingListActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme_Material"></activity>
+            android:theme="@style/AppTheme_Material"
+            ></activity>
+        <activity
+            android:name=".home.jlg.jlg_split_closing.SplitClosingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme_Material" />
+        <activity
+            android:name=".home.jlg.search_group.SearchGroupActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme_Material" />
         <activity
             android:name=".home.jlg.jlg_loan_creation.JlgLoanCreationActivity"
             android:screenOrientation="portrait"
@@ -57,11 +67,13 @@
             android:name=".home.jlg.split_transaction.SplitTransactionActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme_Material" />
+            android:theme="@style/AppTheme_Material"
+            android:windowSoftInputMode="adjustUnspecified" />
         <activity
             android:name=".home.jlg.search_account_group.SearchGroupAccountActivity"
             android:fitsSystemWindows="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme_Material" />
         <activity
             android:name=".home.enquiry.mini_statement.reciept.MiniStatementRecieptActivity"
             android:fitsSystemWindows="true"

@@ -30,4 +30,15 @@ class JlgViewModel : ViewModel() {
         mAction.value= JlgFragment.CLICK_JLG_LOAN_CREATION
 
     }
+    public fun clickSplitClosing(view: View)
+    {
+        mAction.value= JlgFragment.CLICK_JLG_SPLIT_CLOSING
+
+    }
+
+    public fun clickPendingList(view: View)
+    {
+        mAction.value= JlgFragment.CLICK_CLICK_PENDING_LIST
+
+    }
 }

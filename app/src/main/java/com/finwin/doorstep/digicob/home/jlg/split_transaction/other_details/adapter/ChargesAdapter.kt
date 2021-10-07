@@ -10,13 +10,15 @@ import com.finwin.doorstep.digicob.home.jlg.split_transaction.pojo.Charges
 
 import com.finwin.doorstep.digicob.R
 import com.finwin.doorstep.digicob.databinding.LayoutItemChargesBinding
+import java.util.*
 import kotlin.collections.ArrayList
 
 
 class ChargesAdapter : RecyclerView.Adapter<ChargesAdapter.Viewholder>() {
 
-    lateinit var chargeList: ArrayList<Charges>
+    var chargeList: ArrayList<Charges> = arrayListOf()
     var mAction : MutableLiveData<JlgAction> = MutableLiveData()
+    var chargeListLiveData : MutableLiveData<List<Charges>> = MutableLiveData()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Viewholder {
 
@@ -35,6 +37,14 @@ class ChargesAdapter : RecyclerView.Adapter<ChargesAdapter.Viewholder>() {
     public fun removeItem(position: Int)
     {
        chargeList.removeAt(position)
+        notifyDataSetChanged()
+    }
+
+    public fun addCharge(chargesData: Charges)
+    {
+       chargeList.add(chargesData)
+
+        chargeListLiveData.value=chargeList
         notifyDataSetChanged()
     }
 

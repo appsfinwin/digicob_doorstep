@@ -178,10 +178,14 @@ class JlgLoanSelectGroupFragment : Fragment() {
                     {
                         //Toast.makeText(view?.context, it.error, Toast.LENGTH_SHORT).show()
                         viewModel.initLoading(view?.context)
-                        viewModel.updateMember(it.member)
+                        //viewModel.updateMember(it.member)
                     }
                 }
             })
+
+        groupAdapter.memberListLiveData.observe(viewLifecycleOwner, Observer {
+            viewModel.disbaursementData=it
+        })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

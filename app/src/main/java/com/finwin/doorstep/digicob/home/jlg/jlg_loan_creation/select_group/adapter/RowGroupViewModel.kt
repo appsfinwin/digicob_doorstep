@@ -5,7 +5,6 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
-import android.widget.EditText
 import androidx.databinding.*
 import androidx.lifecycle.MutableLiveData
 import com.finwin.doorstep.digicob.BR
@@ -13,33 +12,37 @@ import com.finwin.doorstep.digicob.databinding.LayoutRowGroupBinding
 import com.finwin.doorstep.digicob.home.jlg.jlg_loan_creation.room.Member
 import com.finwin.doorstep.digicob.home.jlg.jlg_loan_creation.select_group.action.SelectGroupAction
 import com.finwin.doorstep.digicob.home.jlg.jlg_loan_creation.select_group.pojo.ProductData
+import java.lang.Exception
 import java.util.*
 
 class RowGroupViewModel(
-    val member: Member,
-    val b: Boolean,
+    val member: List<Member>,
+    val position: Int,
+    optionValue: Boolean,
     val binding: LayoutRowGroupBinding,
     val productData: ObservableArrayList<ProductData>,
-    var mAction: MutableLiveData<SelectGroupAction>
+    var mAction: MutableLiveData<SelectGroupAction>,
+    var memberListLiveData: MutableLiveData<List<Member>>
 ) : BaseObservable() {
 
 
-    var option: String = ""
-    var slNumber:  ObservableField<String> =ObservableField( member.slno)
-    var memberName:  ObservableField<String> = ObservableField(member.customerName)
-    var customerId: ObservableField<String> = ObservableField(member.customerId)
-    var accountNumber:  ObservableField<String> = ObservableField("")
-    var amount:  ObservableField<String> =ObservableField( member.amount)
-    var nomineeName:  ObservableField<String> = ObservableField("")
-    var nomineeMobile:  ObservableField<String> = ObservableField("")
-    var nomineeAddress:  ObservableField<String> = ObservableField("")
-    var insuranceFee:  ObservableField<String> = ObservableField(member.insuranceFee)
-    var documentationFee:  ObservableField<String> = ObservableField(member.documentationFee)
-    var cgst:  ObservableField<String> =ObservableField( member.cgst)
-    var sgst:  ObservableField<String> = ObservableField(member.sgst)
-    var cess:  ObservableField<String> = ObservableField(member.cess)
-    var disbursementAmount:  ObservableField<String> = ObservableField(member.disbursementAmount)
-    var isOptionDisable: ObservableField<Boolean> = ObservableField(b)
+    var slNumber: ObservableField<String> = ObservableField(member[position].slno)
+    var memberName: ObservableField<String> = ObservableField(member[position].customerName)
+    var customerId: ObservableField<String> = ObservableField(member[position].customerId)
+    var accountNumber: ObservableField<String> = ObservableField("")
+    var amount: ObservableField<String> = ObservableField(member[position].amount)
+    var nomineeName: ObservableField<String> = ObservableField("")
+    var nomineeMobile: ObservableField<String> = ObservableField("")
+    var nomineeAddress: ObservableField<String> = ObservableField("")
+    var insuranceFee: ObservableField<String> = ObservableField(member[position].insuranceFee)
+    var documentationFee: ObservableField<String> =
+        ObservableField(member[position].documentationFee)
+    var cgst: ObservableField<String> = ObservableField(member[position].cgst)
+    var sgst: ObservableField<String> = ObservableField(member[position].sgst)
+    var cess: ObservableField<String> = ObservableField(member[position].cess)
+    var disbursementAmount: ObservableField<String> =
+        ObservableField(member[position].disbursementAmount)
+    var isOptionDisable: ObservableField<Boolean> = ObservableField(optionValue)
 
     var registry: PropertyChangeRegistry = PropertyChangeRegistry()
     var selectedOption = 0
@@ -91,28 +94,6 @@ class RowGroupViewModel(
 
     }
 
-
-    var temp_amount = binding.etAmount.editText?.addTextChangedListener(object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-        }
-
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            timer.cancel() //Terminates this timer,discarding any currently scheduled tasks.
-            timer.purge() //Removes all cancelled tasks from this timer's task queue.
-        }
-
-        override fun afterTextChanged(s: Editable?) {
-            timer = Timer()
-            timer.schedule(object : TimerTask() {
-                override fun run() {
-
-
-                }
-            }, 1000)
-        }
-    })
-
     fun clickSave(view: View) {
 
         disbursementAmount.set(
@@ -120,10 +101,10 @@ class RowGroupViewModel(
             ((amount.get()?.toDouble())?.minus(
                 (
                         (insuranceFee.get()?.toDouble())!!
-                                +(documentationFee.get()?.toDouble()!!)
-                                +(cgst.get()?.toDouble()!!)
-                                +(sgst.get()?.toDouble()!!)
-                                +(cess.get()?.toDouble()!!))
+                                + (documentationFee.get()?.toDouble()!!)
+                                + (cgst.get()?.toDouble()!!)
+                                + (sgst.get()?.toDouble()!!)
+                                + (cess.get()?.toDouble()!!))
             )
                     ).toString()
 
@@ -145,9 +126,125 @@ class RowGroupViewModel(
             mobile = nomineeMobile.get().toString(),
             sgst.get().toString()
         )
-        mAction.value=(SelectGroupAction(SelectGroupAction.CHANGE_DATA, member))
+        mAction.value = (SelectGroupAction(SelectGroupAction.CHANGE_DATA, member))
 
     }
 
+    fun onInsuranceFeeChanged(text: CharSequence?) {
+        if (text?.length!! >0) {
+
+            var _disbursementAmount= (if (amount.get() == "") "0" else amount.get())?.toDouble()?.minus(
+                (
+                        ((if (text.toString() == "") "0" else text.toString())?.toDouble())!!
+                                + ((if (documentationFee.get() == "") "0" else documentationFee.get())?.toDouble()!!)
+                                + ((if (cgst.get() == "") "0" else cgst.get())?.toDouble()!!)
+                                + ((if (sgst.get() == "") "0" else sgst.get())?.toDouble()!!)
+                                + ((if (cess.get() == "") "0" else cess.get())?.toDouble()!!))
+            )
+
+            disbursementAmount.set(_disbursementAmount.toString())
+
+            member[position].disbursementAmount = disbursementAmount.get().toString()
+            memberListLiveData.value = member
+        }
+    }
+
+    fun onDocumentaionChanged(text: CharSequence?) {
+        if (text?.length!! >0) {
+
+            var _disbursementAmount= (if (amount.get() == "") "0" else amount.get())?.toDouble()?.minus(
+                (
+                        ((if (insuranceFee.get() == "") "0" else insuranceFee.get())?.toDouble())!!
+                                + ((if (text.toString() == "") "0" else text.toString())?.toDouble()!!)
+                                + ((if (cgst.get() == "") "0" else cgst.get())?.toDouble()!!)
+                                + ((if (sgst.get() == "") "0" else sgst.get())?.toDouble()!!)
+                                + ((if (cess.get() == "") "0" else cess.get())?.toDouble()!!))
+            )
+
+            disbursementAmount.set(_disbursementAmount.toString())
+
+            member[position].disbursementAmount = disbursementAmount.get().toString()
+            memberListLiveData.value = member
+        }
+    }
+
+    fun onCgstChanged(text: CharSequence?) {
+        if (text?.length!! >0) {
+
+            var _disbursementAmount= (if (amount.get() == "") "0" else amount.get())?.toDouble()?.minus(
+                (
+                        ((if (insuranceFee.get() == "") "0" else insuranceFee.get())?.toDouble())!!
+                                + ((if (documentationFee.get() == "") "0" else documentationFee.get())?.toDouble()!!)
+                                + ((if (text.toString() == "") "0" else text.toString())?.toDouble()!!)
+                                + ((if (sgst.get() == "") "0" else sgst.get())?.toDouble()!!)
+                                + ((if (cess.get() == "") "0" else cess.get())?.toDouble()!!))
+            )
+
+            disbursementAmount.set(_disbursementAmount.toString())
+
+            member[position].disbursementAmount = disbursementAmount.get().toString()
+            memberListLiveData.value = member
+        }
+    }
+
+    fun onSgstChanged(text: CharSequence?) {
+        if (text?.length!! >0) {
+
+            var _disbursementAmount= (if (amount.get() == "") "0" else amount.get())?.toDouble()?.minus(
+                (
+                        ((if (insuranceFee.get() == "") "0" else insuranceFee.get())?.toDouble())!!
+                                + ((if (documentationFee.get() == "") "0" else documentationFee.get())?.toDouble()!!)
+                                + ((if (cgst.get() == "") "0" else cgst.get())?.toDouble()!!)
+                                + ((if (text.toString() == "") "0" else text.toString())?.toDouble()!!)
+                                + ((if (cess.get() == "") "0" else cess.get())?.toDouble()!!))
+            )
+
+            disbursementAmount.set(_disbursementAmount.toString())
+
+            member[position].disbursementAmount = disbursementAmount.get().toString()
+            memberListLiveData.value = member
+        }
+    }
+
+    fun onCessChanged(text: CharSequence?) {
+        if (text?.length!! >0) {
+            var _disbursementAmount= (if (amount.get() == "") "0" else amount.get())?.toDouble()?.minus(
+                (
+                        ((if (insuranceFee.get() == "") "0" else insuranceFee.get())?.toDouble())!!
+                                + ((if (documentationFee.get() == "") "0" else documentationFee.get())?.toDouble()!!)
+                                + ((if (cgst.get() == "") "0" else cgst.get())?.toDouble()!!)
+                                + ((if (sgst.get() == "") "0" else sgst.get())?.toDouble()!!)
+                                + ((if (text.toString() == "") "0" else text.toString())?.toDouble()!!))
+            )
+
+            disbursementAmount.set(_disbursementAmount.toString())
+
+            member[position].disbursementAmount = disbursementAmount.get().toString()
+            memberListLiveData.value = member
+        }
+    }
+
+    fun onAmountChanged(text: CharSequence?) {
+        if (text?.length!! >0) {
+            try {
+
+                var _disbursementAmount= (if (text == "") "0" else text.toString()).toDouble()?.minus(
+                    (
+                            ((if (insuranceFee.get() == "") "0" else insuranceFee.get())?.toDouble())!!
+                                    + ((if (documentationFee.get() == "") "0" else documentationFee.get())?.toDouble()!!)
+                                    + ((if (cgst.get() == "") "0" else cgst.get())?.toDouble()!!)
+                                    + ((if (sgst.get() == "") "0" else sgst.get())?.toDouble()!!)
+                                    + ((if (cess.get() == "") "0" else cess.get())?.toDouble()!!))
+                )
+
+                disbursementAmount.set(_disbursementAmount.toString())
+                member[position].disbursementAmount = disbursementAmount.get().toString()
+                memberListLiveData.value = member
+            }catch (e:Exception)
+            {
+                e.stackTrace
+            }
+        }
+    }
 
 }

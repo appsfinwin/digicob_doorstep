@@ -9,30 +9,59 @@ import com.finwin.doorstep.digicob.home.jlg.JlgAction
 
 import com.finwin.doorstep.digicob.R
 import com.finwin.doorstep.digicob.databinding.LayoutItemRemitanceDetailsBinding
+import com.finwin.doorstep.digicob.databinding.LayoutRemittanceBinding
 import com.finwin.doorstep.digicob.home.jlg.split_transaction.pojo.Dat
 import java.util.*
 
-class RemittanceDetailsAdapter : RecyclerView.Adapter<RemittanceDetailsAdapter.RemittanceCreditViewHolder>() {
+class RemittanceDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var dataList: List<Dat> = Collections.emptyList()
     var mAction: MutableLiveData<JlgAction> = MutableLiveData()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RemittanceCreditViewHolder {
-        val binding: LayoutItemRemitanceDetailsBinding =
+    var dataListLiveData: MutableLiveData< List<Dat>> = MutableLiveData()
+
+    var subTranType= ""
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):  RecyclerView.ViewHolder {
+
+        val debitBinding: LayoutRemittanceBinding =
+            DataBindingUtil.inflate(
+                LayoutInflater.from(parent.context),
+                R.layout.layout_remittance,
+                parent,
+                false
+            )
+        var debitHolder =RemittanceDebitViewHolder(debitBinding)
+
+        val creditBinding: LayoutItemRemitanceDetailsBinding =
             DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
                 R.layout.layout_item_remitance_details,
                 parent,
                 false
             )
-        return RemittanceCreditViewHolder(binding)
+       var creditHoldder= RemittanceCreditViewHolder(creditBinding)
+
+        return if (viewType==1)
+            debitHolder
+        else
+            creditHoldder
     }
 
-    fun setData(dataList: List<Dat>)
+    fun setData(dataList: List<Dat>, subTrantype: String)
     {
+        this.subTranType=subTrantype
         this.dataList= Collections.emptyList()
         this.dataList= dataList
+        dataListLiveData.value= dataList
         notifyDataSetChanged()
+
+
+    }
+
+    fun getData(): List<Dat>
+    {
+        return  dataList
     }
 
 
@@ -43,46 +72,59 @@ class RemittanceDetailsAdapter : RecyclerView.Adapter<RemittanceDetailsAdapter.R
     class RemittanceCreditViewHolder(val binding: LayoutItemRemitanceDetailsBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-            fun setBindData(dat: Dat, mAction: MutableLiveData<JlgAction>) {
+            fun setBindData(
+                dat: List<Dat>,
+                mAction: MutableLiveData<JlgAction>,
+                dataListLiveData: MutableLiveData<List<Dat>>,
+                position: Int
+            ) {
 
                 binding.apply {
-                    binding.viewModel= RemittanceItemViewmodel(dat,mAction)
+                    binding.viewModel= RemittanceItemViewmodel(dat,mAction,dataListLiveData,position)
                 }
 
             }
 
     }
 
-//    class RemittanceDebitViewHolder(val binding: LayoutRemittanceBinding) :
-//        RecyclerView.ViewHolder(binding.root) {
-//
-//        fun setBindData(dat: Dat) {
-//
-//            binding.apply {
-//                binding.viewModel= RemittanceCreditViewmodel(dat)
-//            }
-//
-//        }
-//
-//    }
+    class RemittanceDebitViewHolder(val binding: LayoutRemittanceBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-    override fun onBindViewHolder(holder: RemittanceCreditViewHolder, position: Int) {
-        holder.setBindData(dataList[position],mAction)
+        fun setBindData(dat: List<Dat>, position: Int, dataListLiveData: MutableLiveData<List<Dat>>) {
+
+            binding.apply {
+                binding.viewModel= RemittanceCreditViewmodel(dat,position,dataListLiveData)
+            }
+
+        }
+
     }
 
-//    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-////        when(holder.itemViewType)
-////        {
-//         //   1->{
-//                val remitanceDebitViewholder: RemittanceDebitViewHolder = holder as RemittanceDebitViewHolder
-//                remitanceDebitViewholder.setBindData(dataList[position])
-////            } 2->{
-////                val remitanceCreditViewholder: RemittanceCreditViewHolder = holder as RemittanceCreditViewHolder
-////                holder.setBindData(dataList[position])
-////            }
-// //       }
+    override fun getItemViewType(position: Int): Int {
 
- //   }
+        var returnType=0
+        if (subTranType.equals("Cr")){
+            returnType =2
+        }else if (subTranType.equals("Dr")){
+            returnType=1
+        }
+        return returnType
+    }
+
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when(holder.itemViewType)
+        {
+            1->{
+                val remitanceDebitViewholder: RemittanceDebitViewHolder = holder as RemittanceDebitViewHolder
+                remitanceDebitViewholder.setBindData(dataList,position,dataListLiveData)
+            } 2->{
+                val remitanceCreditViewholder: RemittanceCreditViewHolder = holder as RemittanceCreditViewHolder
+            remitanceCreditViewholder.setBindData(dataList,mAction,dataListLiveData,position)
+            }
+        }
+
+    }
 
 
 }

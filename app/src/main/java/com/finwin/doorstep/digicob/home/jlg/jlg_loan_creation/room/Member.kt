@@ -36,7 +36,7 @@ class Member(
     val customerName: String,
 
     @ColumnInfo(name = "Disbursement Amount")
-    val disbursementAmount: String,
+    var disbursementAmount: String,
 
     @ColumnInfo(name = "Documentation Fee")
     val documentationFee: String,

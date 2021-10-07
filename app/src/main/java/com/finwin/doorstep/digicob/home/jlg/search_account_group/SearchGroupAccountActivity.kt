@@ -35,7 +35,7 @@ class SearchGroupAccountActivity : BaseActivity() {
             when (it.action) {
                 JlgAction.JLG_GET_GROUP_ACCOUNT_SUCCESS -> {
 
-                    adapter.setSearchData(it.searchGroupAccountResponse.data)
+                    it.searchGroupAccountResponse?.let { it1 -> adapter.setSearchData(it1.data) }
                     adapter.notifyDataSetChanged()
 
                 }
@@ -58,7 +58,7 @@ class SearchGroupAccountActivity : BaseActivity() {
             when (it.action) {
                 JlgAction.JLG_CLICK_GROUP_ACCOUNT -> {
                     val intent = intent
-                    intent.putExtra("account_number", it.groupAccountData.Ln_GlobalAccNo)
+                    intent.putExtra("account_number", it.groupAccountData?.Ln_GlobalAccNo)
                     setResult(Activity.RESULT_OK, intent)
                     finish()
 

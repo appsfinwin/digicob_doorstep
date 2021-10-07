@@ -60,8 +60,8 @@ class JlgCenterCreationFragment : Fragment() {
             {
                 JlgAction.JLG_CLICK_EDIT_CENTER->{
                     binding.etCenterCode.editText?.isEnabled=false
-                    binding.etCenterCode.editText?.setText(it.centerData.CenterCode)
-                    binding.etCenterName.editText?.setText(it.centerData.CenterName)
+                    binding.etCenterCode.editText?.setText(it.centerData?.CenterCode)
+                    binding.etCenterName.editText?.setText(it.centerData?.CenterName)
                 }
                 JlgAction.JLG_CLICK_DELETE_CENTER->{}
             }
@@ -77,7 +77,9 @@ class JlgCenterCreationFragment : Fragment() {
            {
                 JlgAction.JLG_GET_CENTER_SUCCESS->
                 {
-                    adapter.setCenterData(it.jlgCenterResponse.data)
+                    it.jlgCenterResponse?.let { it1 -> adapter.setCenterData(it1.data) }
+
+                    it.jlgCenterResponse?.let { it1 -> adapter.setCenterData(it1.data) }
                     adapter.notifyDataSetChanged()
                 }
                JlgAction.JLG_CREATE_CENTER->
@@ -94,7 +96,7 @@ class JlgCenterCreationFragment : Fragment() {
 
                    SweetAlertDialog(activity, SweetAlertDialog.SUCCESS_TYPE)
                        .setTitleText("SUCCESS!")
-                       .setContentText(it.jlgCreateCenterResponse.msg)
+                       .setContentText(it.jlgCreateCenterResponse?.msg)
                        .setConfirmClickListener {
                            it.cancel()
                            viewModel.initLoading(it.context)
@@ -115,7 +117,7 @@ class JlgCenterCreationFragment : Fragment() {
                {
                    SweetAlertDialog(activity, SweetAlertDialog.SUCCESS_TYPE)
                        .setTitleText("SUCCESS!")
-                       .setContentText(it.jlgCreateCenterResponse.msg)
+                       .setContentText(it.jlgCreateCenterResponse?.msg)
                        .setConfirmClickListener {
                            it.cancel()
                            viewModel.initLoading(it.context)

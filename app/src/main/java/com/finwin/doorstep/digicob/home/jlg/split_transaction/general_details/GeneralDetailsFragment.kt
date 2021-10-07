@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.finwin.doorstep.digicob.home.jlg.JlgAction
 import com.finwin.doorstep.digicob.home.jlg.search_account_group.SearchGroupAccountActivity
 import com.finwin.doorstep.digicob.home.jlg.split_transaction.SplitTransactionActivity
@@ -40,46 +41,104 @@ class GeneralDetailsFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(GeneralDetailsViewModel::class.java)
         binding.viewModel=viewModel
 
-        viewModel.initLoading(context)
-        viewModel.getCodeMasters()
-
         return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        (activity as SplitTransactionActivity?)?.disableTab(0)
         (activity as SplitTransactionActivity?)?.disableTab(1)
         (activity as SplitTransactionActivity?)?.disableTab(2)
 
         viewModel.mAction.observe(viewLifecycleOwner, Observer {
             viewModel.cancelLoading()
             when (it.action) {
-                JlgAction.JLG_CODE_MASTERS_SUCCESS -> {
-                    viewModel.setSpinnerData(it.codeMasterResponse)
-                }
+
 
                 JlgAction.CLICK_SEARCH_GROUP -> {
                     var intent: Intent = Intent(activity, SearchGroupAccountActivity::class.java)
                     startActivityForResult(intent, Constants.INTENT_SEARCH_GROUP)
                 }
-                JlgAction.JLG_GET_GROUP_ACCOUNT_DETAILS_SUCCESS -> {
-                    if (!it.groupAcccountDetails.data[0].AccountNo.isEmpty()) {
-                       // DataHolder.dat= it.groupAcccountDetails.dat
-                        (activity as SplitTransactionActivity?)?.getAccountsLiveData()?.value=it.groupAcccountDetails.dat
-                        viewModel.setAccountDetails(it.groupAcccountDetails.data[0])
-                    }
-                }
+
                 JlgAction.CLICK_NEXT_FROM_GENERAL_DETAILS->
                 {
                     (activity as SplitTransactionActivity?)?.gotoNext()
-                    (activity as SplitTransactionActivity?)?.enableTab(1)
+
+                    (activity as SplitTransactionActivity?)?.viewModel?.tranType?.set(viewModel.tranType.get())
+                    (activity as SplitTransactionActivity?)?.viewModel?.effectiveDate?.set(viewModel.effectiveDateSelected.get())
+                    (activity as SplitTransactionActivity?)?.viewModel?.transactionDate?.set(viewModel.dateSelected.get())
+                    (activity as SplitTransactionActivity?)?.viewModel?.subTranType?.set(viewModel.subTransTYpe.get())
+                    (activity as SplitTransactionActivity?)?.viewModel?.groupAccountNumber?.set(viewModel.groupAccountNumber.get())
+                    (activity as SplitTransactionActivity?)?.viewModel?.schemeCode?.set(viewModel.scheme.get())
+                    (activity as SplitTransactionActivity?)?.viewModel?.transferAccountNumber?.set(viewModel.transferAccountNumber.get())
                 }
 
                 JlgAction.CLICK_SEARCH_ACCCOUNT_NUMBER->
                 {
                     var intent:Intent= Intent(activity, SearchActivity::class.java)
                     startActivityForResult(intent, Constants.INTENT_SEARCH_ACCOUNT_FROM_JLG)
+                }
+
+                JlgAction.JLG_GET_GROUP_ACCOUNT_DETAILS->
+                {
+                  viewModel.initLoading(context)
+                    viewModel.groupAccountNumber.get()?.let { it1 ->
+                        viewModel.subTransTYpe.get()?.let { it2 ->
+                            (activity as SplitTransactionActivity).viewModel.subTranType.set(it2)
+                            (activity as SplitTransactionActivity).viewModel.groupAccountDetails(
+                                it1, it2
+                            )
+                        }
+                    }
+                }
+
+                JlgAction.API_ERROR->{
+                    SweetAlertDialog(activity, SweetAlertDialog.ERROR_TYPE)
+                        .setTitleText("ERROR!")
+                        .setContentText(it.error)
+                        .show()
+                }
+
+
+            }
+        })
+
+        (activity as SplitTransactionActivity?)?.viewModel?.mAction?.observe(viewLifecycleOwner, Observer {
+            (activity as SplitTransactionActivity?)?.viewModel?.cancelLoading()
+            viewModel.cancelLoading()
+            when(it.action)
+            {
+                JlgAction.JLG_GET_GROUP_ACCOUNT_DETAILS_SUCCESS -> {
+                    viewModel.cancelLoading()
+                    if (!it.groupAcccountDetails!!.data[0].AccountNo.isEmpty()) {
+
+                        // DataHolder.dat= it.groupAcccountDetails.dat
+                       // (activity as SplitTransactionActivity?)?.viewModel?.setAccountData(it.groupAcccountDetails.dat)
+                        (activity as SplitTransactionActivity?)?.viewModel?.accountsLiveData?.value=
+                            it.groupAcccountDetails!!.dat
+                        it.groupAcccountDetails?.data?.get(0)?.let { it1 ->
+                            viewModel.setAccountDetails(
+                                it1
+                            )
+                        }
+                    }
+                } JlgAction.JLG_CODE_MASTERS_SUCCESS -> {
+                it.codeMasterResponse?.let { it1 -> viewModel.setSpinnerData(it1) }
+                }
+                JlgAction.API_ERROR->{
+                    SweetAlertDialog(activity, SweetAlertDialog.ERROR_TYPE)
+                        .setTitleText("ERROR!")
+                        .setContentText(it.error)
+                        .show()
+                }
+                JlgAction.JLG_CLEAR_DATA->{
+                    viewModel.clearData()
+
+                    (activity as SplitTransactionActivity?)?.viewModel?. accountsData?.clear()
+                    (activity as SplitTransactionActivity?)?.viewModel?. chargesList?.clear()
+                    (activity as SplitTransactionActivity?)?.viewModel?.accountsLiveData?.value= (activity as SplitTransactionActivity?)?.viewModel?. accountsData
+                    (activity as SplitTransactionActivity?)?.viewModel?. clearData()
                 }
 
             }
@@ -100,9 +159,9 @@ class GeneralDetailsFragment : Fragment() {
         {
             if(data!=null) {
                 var accountNumber: String? = data.getStringExtra("account_number")
-                viewModel.accountNumber.set(accountNumber)
+                viewModel.transferAccountNumber.set(accountNumber)
             }else{
-                viewModel.accountNumber.set("")
+                viewModel.transferAccountNumber.set("")
             }
         }
     }

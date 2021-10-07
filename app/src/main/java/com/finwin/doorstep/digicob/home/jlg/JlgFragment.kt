@@ -15,17 +15,22 @@ import com.finwin.doorstep.digicob.databinding.JlgFragmentBinding
 import com.finwin.doorstep.digicob.home.jlg.jlg_center_creation.JlgCenterCreationFragment
 import com.finwin.doorstep.digicob.home.jlg.jlg_group_creation.JlgGroupCreationFragment
 import com.finwin.doorstep.digicob.home.jlg.jlg_loan_creation.JlgLoanCreationActivity
+import com.finwin.doorstep.digicob.home.jlg.jlg_pending_lists.JlgPendingListActivity
+import com.finwin.doorstep.digicob.home.jlg.jlg_split_closing.SplitClosingActivity
 import com.finwin.doorstep.digicob.home.jlg.split_transaction.SplitTransactionActivity
 
 class JlgFragment : Fragment() {
 
     companion object {
         fun newInstance() = JlgFragment()
+        var DEFAULT: Int = -1
         var CLICK_CENTER_CREATION: Int = 1
         var CLICK_SPLIT_TRANSACTIONS: Int = 2
         var CLICK_GROUP_CREATION: Int = 3
         var CLICK_JLG_LOAN_CREATION: Int = 4
-        var DEFAULT: Int = -1
+        var CLICK_JLG_SPLIT_CLOSING: Int = 5
+        var CLICK_CLICK_PENDING_LIST: Int = 6
+
     }
 
     private lateinit var viewModel: JlgViewModel
@@ -70,6 +75,16 @@ class JlgFragment : Fragment() {
 
                 CLICK_SPLIT_TRANSACTIONS -> {
                     var intent = Intent(activity, SplitTransactionActivity::class.java)
+                    startActivity(intent)
+                }
+
+                CLICK_JLG_SPLIT_CLOSING -> {
+                    var intent = Intent(activity, SplitClosingActivity::class.java)
+                    startActivity(intent)
+                }
+
+                CLICK_CLICK_PENDING_LIST -> {
+                    var intent = Intent(activity, JlgPendingListActivity::class.java)
                     startActivity(intent)
                 }
             }

@@ -20,6 +20,7 @@ class SelectGroupAdapter( val productData: ObservableArrayList<ProductData>) : R
     var optionValue : Boolean =false
     lateinit var viewHolder: ViewHolder
     var mAction : MutableLiveData<SelectGroupAction> = MutableLiveData()
+    var memberListLiveData : MutableLiveData< List<Member>> = MutableLiveData()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         var binding: LayoutRowGroupBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context),
@@ -30,7 +31,7 @@ class SelectGroupAdapter( val productData: ObservableArrayList<ProductData>) : R
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         this.viewHolder = holder
-        holder.setBindData(memberList[position],optionValue, productData,mAction)
+        holder.setBindData(memberList,position,optionValue, productData,mAction,memberListLiveData)
     }
 
     fun setOption(option:String)
@@ -53,13 +54,15 @@ class SelectGroupAdapter( val productData: ObservableArrayList<ProductData>) : R
 
     class ViewHolder(val binding: LayoutRowGroupBinding) : RecyclerView.ViewHolder(binding.root) {
         fun setBindData(
-            member: Member,
-            b: Boolean,
+            member: List<Member>,
+            position: Int,
+            optionValue: Boolean,
             productData: ObservableArrayList<ProductData>,
-            mAction: MutableLiveData<SelectGroupAction>
+            mAction: MutableLiveData<SelectGroupAction>,
+            memberListLiveData: MutableLiveData<List<Member>>
         ) {
             binding.apply {
-                this.viewModel= RowGroupViewModel(member,b,this, productData,mAction)
+                this.viewModel= RowGroupViewModel(member,position,optionValue,this, productData,mAction,memberListLiveData)
             }
 
         }

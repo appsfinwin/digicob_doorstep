@@ -57,12 +57,18 @@ class RemittanceDetailsFragment : Fragment() {
 
     private fun observeAdapter(adapter: RemittanceDetailsAdapter) {
 
+        adapter.dataListLiveData.observe(viewLifecycleOwner, Observer {
+            (activity as SplitTransactionActivity?)?.viewModel?.setAccountData(it)
+            viewModel.setAccountData(it)
+            //(activity as SplitTransactionActivity?)?.viewModel?.accountsLiveData?.value=data
+        })
+
         adapter.mAction.observe(viewLifecycleOwner, Observer {
             when (it.action) {
                 JlgAction.SELECT_ACCOUNT -> {
                    // if(  (activity as SplitTransactionActivity).getSelectedAccountsLiveData().contains(it.dat))
                    // {
-                        (activity as SplitTransactionActivity?)?.insertData(it.dat)
+                        //(activity as SplitTransactionActivity?)?.insertData(it.dat)
                    // }
 //                    add(
 //                        it.dat
@@ -74,7 +80,7 @@ class RemittanceDetailsFragment : Fragment() {
 //                    (activity as SplitTransactionActivity?)?.getSelectedAccountsLiveData()?.remove(
 //                        it.dat
 //                    )
-                    (activity as SplitTransactionActivity?)?.removeData(it.dat)
+                    //(activity as SplitTransactionActivity?)?.removeData(it.dat)
 
                    // Log.d(TAG, "observeAdapter: "+ (activity as SplitTransactionActivity?)?.getSelectedAccountsLiveData()?.size)
                 }
@@ -90,8 +96,12 @@ class RemittanceDetailsFragment : Fragment() {
            viewModel.mAction.observe(viewLifecycleOwner, Observer {
                when (it.action) {
                    JlgAction.CLICK_NEXT_FROM_REMITTANCE_DETAILS -> {
+//
+//                       (activity as SplitTransactionActivity?)?.enableTab(1)
+
                        (activity as SplitTransactionActivity?)?.gotoNext()
-                       (activity as SplitTransactionActivity?)?.enableTab(1)
+                       //(activity as SplitTransactionActivity?)?.viewModel?.accountsData =
+//                       (activity as SplitTransactionActivity?)?.viewModel?.setAccountData(viewModel.accountListData.)
                    }
                    JlgAction.CLICK_PREVIOUS_FROM_REMITTANCE_DETAILS -> {
                        (activity as SplitTransactionActivity?)?.gotoPrevious()
@@ -100,9 +110,12 @@ class RemittanceDetailsFragment : Fragment() {
                }
            })
 
-        (activity as SplitTransactionActivity?)?.getAccountsLiveData()?.observe(viewLifecycleOwner, Observer {
+        (activity as SplitTransactionActivity?)?.viewModel?.accountsLiveData?.observe(viewLifecycleOwner, Observer {
 
-            adapter.setData(it)
+            (activity as SplitTransactionActivity?)?.viewModel?.subTranType?.get()?.let { it1 ->
+                adapter.setData(it, it1)
+            }
+            (activity as SplitTransactionActivity?)?.viewModel?.setAccountData(it)
             adapter.notifyDataSetChanged()
 
         })

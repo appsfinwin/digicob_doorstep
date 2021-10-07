@@ -23,6 +23,8 @@ import com.finwin.doorstep.digicob.home.jlg.split_transaction.pojo.SubTranType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import org.json.JSONObject
+import java.text.ParseException
+import java.text.SimpleDateFormat
 
 class GeneralDetailsViewModel : ViewModel(), Observable {
 
@@ -31,15 +33,17 @@ class GeneralDetailsViewModel : ViewModel(), Observable {
     var subTransactionTypeList: ObservableArrayList<String> = ObservableArrayList()
     var subTransactionTypeListData: ObservableArrayList<SubTranType> = ObservableArrayList()
     lateinit var apiInterface: ApiInterface
-    var repository: GeneralDetailsRepository = GeneralDetailsRepository().getInstance()
-    lateinit var mAction : MutableLiveData<JlgAction>
+    var mAction: MutableLiveData<JlgAction> = MutableLiveData()
 
     var date: ObservableField<String> = ObservableField("--Select Date--")
+    var dateSelected: ObservableField<String> = ObservableField("--Select Date--")
+    var transactionDate: ObservableField<String> = ObservableField("--Select Date--")
     var effectiveDate: ObservableField<String> = ObservableField("--Select Effective Date--")
+    var effectiveDateSelected: ObservableField<String> = ObservableField("")
     var groupAccountNumber: ObservableField<String> = ObservableField("")
-    var accountNumber: ObservableField<String> = ObservableField("")
-    var subTransTYpe: ObservableField<String> = ObservableField("Cr")
-    var tranType: ObservableField<String> = ObservableField("-1")
+    var transferAccountNumber: ObservableField<String> = ObservableField("")
+    var subTransTYpe: ObservableField<String> = ObservableField("")
+    var tranType: ObservableField<String> = ObservableField("")
     var branch: ObservableField<String> = ObservableField("")
     var loanType: ObservableField<String> = ObservableField("")
     var scheme: ObservableField<String> = ObservableField("")
@@ -50,23 +54,23 @@ class GeneralDetailsViewModel : ViewModel(), Observable {
     var accountVisibility: ObservableField<Int> = ObservableField(View.GONE)
     var groupDetailsVisibility: ObservableField<Int> = ObservableField(View.GONE)
 
-    init {
-        mAction= MutableLiveData()
-        repository.mAction= mAction
-    }
     fun onClickDate(view: View) {
         val myCalendar = Calendar.getInstance()
         val date =
             DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                 //Toast.makeText(view.context,year.toString()+"-"+(monthOfYear+1).toString()+"-"+dayOfMonth.toString(),Toast.LENGTH_LONG).show()
 
-                date.set(year.toString() + "-" + (monthOfYear + 1).toString() + "-" + dayOfMonth.toString())
+                var _date =
+                    (monthOfYear + 1).toString() + "-" + dayOfMonth.toString() + "-" + year.toString()
+                date.set(_date)
+                dateSelected.set(convertDate(_date))
 
             }
         val datePickerDialog: DatePickerDialog
         datePickerDialog = DatePickerDialog(
             view.context, date, myCalendar[Calendar.YEAR], myCalendar[Calendar.MONTH],
-            myCalendar[Calendar.DAY_OF_MONTH])
+            myCalendar[Calendar.DAY_OF_MONTH]
+        )
         datePickerDialog.show()
     }
 
@@ -75,20 +79,22 @@ class GeneralDetailsViewModel : ViewModel(), Observable {
         val myCalendar = Calendar.getInstance()
         val date =
             DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                //Toast.makeText(view.context,year.toString()+"-"+(monthOfYear+1).toString()+"-"+dayOfMonth.toString(),Toast.LENGTH_LONG).show()
 
-               effectiveDate.set(year.toString() + "-" + (monthOfYear + 1).toString() + "-" + dayOfMonth.toString())
+                var _date =
+                    (monthOfYear + 1).toString() + "-" + dayOfMonth.toString() + "-" + year.toString()
+                effectiveDate.set(_date)
+                effectiveDateSelected.set(convertDate(_date))
 
             }
-        val datePickerDialog: DatePickerDialog
-        datePickerDialog = DatePickerDialog(
+        val datePickerDialog = DatePickerDialog(
             view.context, date, myCalendar[Calendar.YEAR], myCalendar[Calendar.MONTH],
-            myCalendar[Calendar.DAY_OF_MONTH])
+            myCalendar[Calendar.DAY_OF_MONTH]
+        )
         datePickerDialog.show()
     }
 
-    private var selectedTransactionType= 0
-    private var selectedSubTransactionType= 0
+    private var selectedTransactionType = 0
+    private var selectedSubTransactionType = 0
     private val registry = PropertyChangeRegistry()
 
     @Bindable
@@ -101,46 +107,19 @@ class GeneralDetailsViewModel : ViewModel(), Observable {
         registry.notifyChange(this, BR.selectedTransactionType)
     }
 
-    fun onSelectedTransactionType(parent: AdapterView<*>?, view: View?, position: Int, id: Long
+    fun onSelectedTransactionType(
+        parent: AdapterView<*>?, view: View?, position: Int, id: Long
     ) {
-      if (transactionTypeListData[position].Code.equals("T"))
-      {
-          accountNumber.set("")
-          accountVisibility.set(View.VISIBLE)
-      }else{
-          accountVisibility.set(View.GONE)
-      }
+        if (transactionTypeListData[position].Code.equals("T")) {
+            transferAccountNumber.set("")
+            accountVisibility.set(View.VISIBLE)
+        } else {
+            accountVisibility.set(View.GONE)
+        }
         tranType.set(transactionTypeListData[position].Code)
 
     }
 
-    public fun getCodeMasters() {
-
-        val jsonParams: MutableMap<String?, Any?> = HashMap()
-
-        val body = RequestBody.create(
-            "application/json; charset=utf-8".toMediaTypeOrNull(),
-            JSONObject(jsonParams).toString()
-        )
-
-        apiInterface = RetrofitClient().RetrofitClient()?.create(ApiInterface::class.java)!!
-        repository.getCodeMasters(apiInterface)
-    }
-
-    public fun groupAccountDetails() {
-
-        val jsonParams: MutableMap<String?, Any?> = HashMap()
-        jsonParams["Accno"] =groupAccountNumber.get()
-        jsonParams["SubTranType"] =subTransTYpe.get()
-
-        val body = RequestBody.create(
-            "application/json; charset=utf-8".toMediaTypeOrNull(),
-            JSONObject(jsonParams).toString()
-        )
-
-        apiInterface = RetrofitClient().RetrofitClient()?.create(ApiInterface::class.java)!!
-        repository.groupAccountDetails(apiInterface,body)
-    }
 
     @Bindable
     fun getSelectedSubTransactionType(): Int {
@@ -152,11 +131,13 @@ class GeneralDetailsViewModel : ViewModel(), Observable {
         registry.notifyChange(this, BR.selectedSubTransactionType)
     }
 
-    fun onSelectedSubTransactionType(parent: AdapterView<*>?, view: View?, position: Int, id: Long
+    fun onSelectedSubTransactionType(
+        parent: AdapterView<*>?, view: View?, position: Int, id: Long
     ) {
 
         subTransTYpe.set(subTransactionTypeListData[position].Code)
     }
+
     override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {
         registry.add(callback)
     }
@@ -193,36 +174,33 @@ class GeneralDetailsViewModel : ViewModel(), Observable {
 
     init {
         transactionTypeList.add("--Select Transaction Type--")
-        transactionTypeListData.add(Mode("-1","--Select Transaction Type--"))
+        transactionTypeListData.add(Mode("", "--Select Transaction Type--"))
 
         subTransactionTypeList.add("--Select Sub-Transaction Type--")
-        subTransactionTypeListData.add(SubTranType("-1","--Select Sub-Transaction Type--"))
+        subTransactionTypeListData.add(SubTranType("", "--Select Sub-Transaction Type--"))
 
 
     }
-    public fun clickSearchGroupAccountNumber(view: View)
-    {
+
+    public fun clickSearchGroupAccountNumber(view: View) {
         groupDetailsVisibility.set(View.GONE)
-        mAction.value= JlgAction(JlgAction.CLICK_SEARCH_GROUP)
+        mAction.value = JlgAction(JlgAction.CLICK_SEARCH_GROUP)
     }
 
-    public fun clickAccountNumber(view: View)
-    {
-        mAction.value= JlgAction(JlgAction.CLICK_SEARCH_ACCCOUNT_NUMBER)
+    public fun clickAccountNumber(view: View) {
+        mAction.value = JlgAction(JlgAction.CLICK_SEARCH_ACCCOUNT_NUMBER)
     }
 
-    public fun clickSubmitAccountNumber(view: View)
-    {
-        if (groupAccountNumber.get().equals(""))
-        {
+    public fun clickSubmitAccountNumber(view: View) {
+
+        if (groupAccountNumber.get().equals("")) {
             Services.showSnakbar("Account number cannot be empty!", view)
-        }else if (subTransTYpe.get().equals("-1"))
-        {
+        } else if (subTransTYpe.get().equals("")) {
             Services.showSnakbar("Please select Sub- transaction type", view)
-        }else
-        {
-            initLoading(view.context)
-            groupAccountDetails()
+        } else {
+            //initLoading(view.context)
+//            groupAccountDetails()
+            mAction.value = JlgAction(JlgAction.JLG_GET_GROUP_ACCOUNT_DETAILS)
         }
     }
 
@@ -237,8 +215,62 @@ class GeneralDetailsViewModel : ViewModel(), Observable {
         roi.set(data.Ln_IntRate)
     }
 
-    fun clickNext(view: View)
+    fun clickNext(view: View) {
+
+        if (tranType.get().equals("")) {
+            Services.showSnakbar("Please select transaction type", view)
+        }else  if (tranType.get().equals("T") && transferAccountNumber.get().equals("") ) {
+            Services.showSnakbar("Account number cannot be empty", view)
+        }
+        else if (effectiveDateSelected.get().equals("")) {
+            Services.showSnakbar("Please select effective date", view)
+        } else if (dateSelected.get().equals("")) {
+            Services.showSnakbar("Please select date", view)
+        } else if (groupAccountNumber.get().equals("")) {
+            Services.showSnakbar("Account number cannot be empty!", view)
+        } else if (subTransTYpe.get().equals("-1")) {
+            Services.showSnakbar("Please select Sub-transaction type", view)
+        } else {
+            mAction.value = JlgAction(JlgAction.CLICK_NEXT_FROM_GENERAL_DETAILS)
+        }
+
+    }
+
+    fun convertDate(_date: String): String
     {
-        mAction.value= JlgAction(JlgAction.CLICK_NEXT_FROM_GENERAL_DETAILS)
+        var submitDate=""
+        val theDate: String = _date
+        val firstFormatter = SimpleDateFormat("MM-dd-yyyy")
+        try {
+            val date: Date = firstFormatter.parse(theDate)
+            val sd = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+            submitDate = sd.format(date)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+
+        return  submitDate
+    }
+
+    fun clearData() {
+
+        setSelectedTransactionType(0)
+        setSelectedSubTransactionType(0)
+        tranType.set("")
+        transferAccountNumber.set("")
+        effectiveDateSelected.set("")
+        dateSelected.set("")
+        groupAccountNumber.set("")
+        subTransTYpe.set("")
+
+        groupDetailsVisibility.set(View.GONE)
+        branch.set("")
+        loanType.set("")
+        scheme.set("")
+        loanAmount.set("")
+        loanDate.set("")
+        dueDate.set("")
+        roi.set("")
+
     }
 }

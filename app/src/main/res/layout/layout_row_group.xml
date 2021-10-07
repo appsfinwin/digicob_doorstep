@@ -112,7 +112,9 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:onTextChanged="@{(text, start, before, count) -> viewModel.onAmountChanged(text)}"
                             android:hint="Enter Amount"
+                            android:inputType="number"
                             android:text="@={viewModel.amount}" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -170,6 +172,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Insurance Fee"
+                            android:inputType="number"
+                            android:onTextChanged="@{(text, start, before, count) -> viewModel.onInsuranceFeeChanged(text)}"
                             android:text="@={viewModel.insuranceFee}" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -189,6 +193,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="CGST"
+                            android:inputType="number"
+                            android:onTextChanged="@{(text, start, before, count) -> viewModel.onCgstChanged(text)}"
                             android:text="@={viewModel.cgst}" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -200,6 +206,8 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/view21"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/et_cgst">
@@ -208,6 +216,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="CESS"
+                            android:inputType="number"
+                            android:onTextChanged="@{(text, start, before, count) -> viewModel.onCessChanged(text)}"
                             android:text="@={viewModel.cess}" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -247,6 +257,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Documentation Fee"
+                            android:inputType="number"
+                            android:onTextChanged="@{(text, start, before, count) -> viewModel.onDocumentaionChanged(text)}"
                             android:text="@={viewModel.documentationFee}" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -266,6 +278,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="SGST"
+                            android:inputType="number"
+                            android:onTextChanged="@{(text, start, before, count) -> viewModel.onSgstChanged(text)}"
                             android:text="@={viewModel.sgst}" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -277,6 +291,8 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/view21"
                         app:layout_constraintTop_toBottomOf="@+id/textInputLayout27">
@@ -285,6 +301,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Disbursement amount"
+                            android:inputType="number"
+                            android:enabled="false"
                             android:text="@={viewModel.disbursementAmount}" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -335,32 +353,10 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:enabled="false"
                             android:text="@{viewModel.slNumber}"
                             android:hint="Sl Number" />
                     </com.google.android.material.textfield.TextInputLayout>
-
-                    <TextView
-                        android:elevation="5dp"
-                        android:paddingBottom="10dp"
-                        android:paddingTop="10dp"
-                        android:paddingLeft="30dp"
-                        android:paddingRight="30dp"
-                        android:backgroundTint="@null"
-                        android:onClick="@{viewModel::clickSave}"
-
-                        android:background="@drawable/bg_white_button"
-                        android:textColor="@color/colorPrimary"
-                        android:textAllCaps="false"
-                        android:id="@+id/button36"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="16dp"
-                        android:text="save"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textInputLayout20" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>

@@ -1,18 +1,27 @@
 package com.finwin.doorstep.digicob.home.jlg.split_transaction
 
+import android.app.AlertDialog
+import android.content.DialogInterface
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableArrayList
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import com.google.android.material.tabs.TabLayout
 import com.finwin.doorstep.digicob.home.jlg.split_transaction.pojo.Dat
 
 import com.finwin.doorstep.digicob.R
 import com.finwin.doorstep.digicob.databinding.ActivitySplitTransactionBinding
+import com.finwin.doorstep.digicob.home.jlg.JlgAction
+import com.finwin.doorstep.digicob.login.LoginActivity
 import com.finwin.doorstep.digicob.logout_listner.BaseActivity
+import com.finwin.doorstep.digicob.utils.Constants
 import com.finwin.doorstep.digicob.utils.CustomViewPager
 
 class SplitTransactionActivity : BaseActivity() {
@@ -23,6 +32,7 @@ class SplitTransactionActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
 
 
         binding= DataBindingUtil.setContentView(this, R.layout.activity_split_transaction)
@@ -43,6 +53,9 @@ class SplitTransactionActivity : BaseActivity() {
 
         tabs.setupWithViewPager(viewPager)
 
+//        viewModel.agentId.set(sharedPreferences.getString(Constants.AGENT_ID,""))
+//        viewModel.branchCode.set(sharedPreferences.getString(Constants.BRANCH_ID,""))
+
     }
 
     fun disableTab(tabNumber: Int) {
@@ -60,6 +73,11 @@ class SplitTransactionActivity : BaseActivity() {
     }
 
 
+    fun setTab(tabNumber: Int)
+    {
+        viewPager.setCurrentItem(tabNumber, true)
+    }
+
     fun gotoNext() {
         viewPager.setCurrentItem(getItem(+1), true)
     }
@@ -70,26 +88,35 @@ class SplitTransactionActivity : BaseActivity() {
         return viewPager.currentItem + i
     }
 
-    public fun getAccountsLiveData(): MutableLiveData<ArrayList<Dat>>
-    {
-        return viewModel.accountsLiveData
-    }
-    public fun getSelectedAccountsLiveData():ObservableArrayList<Dat>
-    {
-        //viewModel.selectedAccountsData.value=viewModel.selectedAccountsObservable
-        return viewModel.selectedAccountsObservable
-    }
-    public fun insertData(dat: Dat)
-    {
-        //OtherDetailsFragment.newInstance().insertData(dat)
-        viewModel.selectedAccountsObservable.add(dat)
-    }
+//    public fun getSelectedAccountsLiveData():ObservableArrayList<Dat>
+//    {
+//        //viewModel.selectedAccountsData.value=viewModel.selectedAccountsObservable
+//        return viewModel.selectedAccountsObservable
+//    }
+//    public fun insertData(dat: Dat)
+//    {
+//        //OtherDetailsFragment.newInstance().insertData(dat)
+//        viewModel.selectedAccountsObservable.add(dat)
+//    }
+//
+//    public fun removeData(dat: Dat)
+//    {
+//        if ( viewModel.selectedAccountsObservable.contains(dat)){
+//        viewModel.selectedAccountsObservable.remove(dat)}
+//            //OtherDetailsFragment.newInstance().removeData(dat)
+//
+//    }
 
-    public fun removeData(dat: Dat)
-    {
-        if ( viewModel.selectedAccountsObservable.contains(dat)){
-        viewModel.selectedAccountsObservable.remove(dat)}
-            //OtherDetailsFragment.newInstance().removeData(dat)
-
+    override fun onBackPressed() {
+        AlertDialog.Builder(this)
+            .setIcon(android.R.drawable.ic_dialog_alert)
+            .setTitle("Exit?")
+            .setMessage("saved data will be lost?")
+            .setPositiveButton("Yes",
+                DialogInterface.OnClickListener { dialog, which ->
+                    super.onBackPressed()
+                })
+            .setNegativeButton("No", null)
+            .show()
     }
 }

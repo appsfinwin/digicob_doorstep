@@ -3,12 +3,12 @@ package com.finwin.doorstep.digicob.home.jlg
 import com.finwin.doorstep.digicob.home.jlg.jlg_center_creation.pojo.CenterData
 import com.finwin.doorstep.digicob.home.jlg.jlg_center_creation.pojo.JlgCreateCenterResponse
 import com.finwin.doorstep.digicob.home.jlg.jlg_center_creation.pojo.getjLgCenterResponse
+import com.finwin.doorstep.digicob.home.jlg.jlg_pending_lists.pojo.JlgPendingListResponse
+import com.finwin.doorstep.digicob.home.jlg.jlg_pending_lists.pojo.PendingData
+import com.finwin.doorstep.digicob.home.jlg.jlg_pending_lists.pojo.RemoveAccountResponse
 import com.finwin.doorstep.digicob.home.jlg.search_account_group.pojo.GroupAccountData
 import com.finwin.doorstep.digicob.home.jlg.search_account_group.pojo.SearchGroupAccountResponse
-import com.finwin.doorstep.digicob.home.jlg.split_transaction.pojo.Charges
-import com.finwin.doorstep.digicob.home.jlg.split_transaction.pojo.CodeMasterResponse
-import com.finwin.doorstep.digicob.home.jlg.split_transaction.pojo.Dat
-import com.finwin.doorstep.digicob.home.jlg.split_transaction.pojo.GroupAccountDetails
+import com.finwin.doorstep.digicob.home.jlg.split_transaction.pojo.*
 
 class JlgAction {
     companion object {
@@ -24,30 +24,43 @@ class JlgAction {
         const val CLICK_SEARCH_ACCCOUNT_NUMBER: Int = 8
         const val CLICK_NEXT_FROM_REMITTANCE_DETAILS: Int = 9
         const val CLICK_PREVIOUS_FROM_REMITTANCE_DETAILS: Int = 10
-        const val CLICK_PREVIOUS_FROM_OTHER_DETAILS: Int = 10
-        const val SELECT_ACCOUNT: Int = 11
-        const val DE_SELECT_ACCOUNT: Int = 12
-        const val CLICK_DELETE: Int = 13
-        const val JLG_UPDATE_CENTER: Int = 14
-        const val JLG_CREATE_CENTER: Int = 15
-        const val JLG_GET_CENTER_SUCCESS: Int = 16
-        const val JLG_CLICK_EDIT_CENTER: Int = 17
-        const val JLG_CLICK_DELETE_CENTER: Int = 18
+        const val CLICK_PREVIOUS_FROM_OTHER_DETAILS: Int = 11
+        const val SELECT_ACCOUNT: Int = 12
+        const val DE_SELECT_ACCOUNT: Int = 13
+        const val CLICK_DELETE: Int = 14
+        const val JLG_UPDATE_CENTER: Int = 15
+        const val JLG_CREATE_CENTER: Int = 16
+        const val JLG_GET_CENTER_SUCCESS: Int = 17
+        const val JLG_CLICK_EDIT_CENTER: Int = 18
+        const val JLG_CLICK_DELETE_CENTER: Int = 19
+        const val JLG_GET_GROUP_ACCOUNT_DETAILS: Int = 20
+        const val ADD_CHARGES: Int = 21
+        const val CLICK_NEXT_FROM_JLG_SPLIT_GENERAL_DETAILS: Int = 22
+        const val CLICK_SUBMIT_FROM_JLG_SPLIT_OTHER_DETAILS: Int = 23
+        const val SPLIT_TRANSACTION_SUCCESS: Int = 24
+        const val JLG_CLEAR_DATA: Int = 25
+        const val JLG_PENDING_LIST_SUCCESS: Int = 26
+        const val REMOVE_ACCOUNT_SUCCESS: Int = 27
+        const val CLICK_REMOVE_ACCOUNT: Int = 28
 
     }
 
     var action: Int? = null
     var position: Int? = null
     var error: String = ""
-    lateinit var jlgCenterResponse: getjLgCenterResponse
-    lateinit var jlgCreateCenterResponse: JlgCreateCenterResponse
-    lateinit var centerData: CenterData
-    lateinit var  groupAccountData: GroupAccountData
-    lateinit var searchGroupAccountResponse: SearchGroupAccountResponse
-    lateinit var codeMasterResponse: CodeMasterResponse
-    lateinit var groupAcccountDetails: GroupAccountDetails
-    lateinit var dat: Dat
-    lateinit var charges: Charges
+    var jlgCenterResponse: getjLgCenterResponse ? = null
+    var jlgCreateCenterResponse: JlgCreateCenterResponse? = null
+    var centerData: CenterData? = null
+    var groupAccountData: GroupAccountData? = null
+    var searchGroupAccountResponse: SearchGroupAccountResponse? = null
+    var codeMasterResponse: CodeMasterResponse?= null
+    var groupAcccountDetails: GroupAccountDetails? = null
+    var dat: Dat? = null
+    var charges: Charges? = null
+    var splitTransactionResponse: SplitTransactionResponse? = null
+    var getPendingListResponse: JlgPendingListResponse? = null
+    var removeAccountResponse: RemoveAccountResponse? = null
+    var pendingData: PendingData? = null
 
 
 
@@ -104,6 +117,31 @@ class JlgAction {
         this.action = action
         this.charges = charges
         this.position=position
+    }
+
+    constructor(action: Int?, charges: Charges) {
+        this.action = action
+        this.charges = charges
+    }
+
+    constructor(action: Int?, splitTransactionResponse: SplitTransactionResponse?) {
+        this.action = action
+        this.splitTransactionResponse = splitTransactionResponse
+    }
+
+    constructor(action: Int?, getPendingListResponse: JlgPendingListResponse?) {
+        this.action = action
+        this.getPendingListResponse = getPendingListResponse
+    }
+
+    constructor(action: Int?, removeAccountResponse: RemoveAccountResponse?) {
+        this.action = action
+        this.removeAccountResponse = removeAccountResponse
+    }
+
+    constructor(action: Int?, pendingData: PendingData?) {
+        this.action = action
+        this.pendingData = pendingData
     }
 
 

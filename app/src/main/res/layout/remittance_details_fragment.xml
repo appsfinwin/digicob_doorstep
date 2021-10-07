@@ -28,33 +28,39 @@
             tools:listitem="@layout/layout_item_remitance_details" />
 
         <Button
-            android:onClick="@{viewModel::clickPrevious}"
-            android:textColor="@color/text_color_white"
-            android:background="@drawable/bg_login_button"
             android:id="@+id/button14"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="16dp"
-            android:text="Previous"
+            android:background="@drawable/bg_login_button"
+            android:onClick="@{viewModel::clickPrevious}"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
+            android:text="Previous"
+            android:textColor="@color/text_color_white"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/button15"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:onClick="@{viewModel::clickNext}"
-            android:text="Next"
-            android:textColor="@color/text_color_white"
-            android:background="@drawable/bg_login_button"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
             android:id="@+id/button15"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_login_button"
+            android:onClick="@{viewModel::clickNext}"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="Next"
+            android:textColor="@color/text_color_white"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button14" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

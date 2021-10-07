@@ -81,12 +81,11 @@
                         <Spinner
                             android:id="@+id/spinner3"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="50dp"
                             android:layout_marginStart="16dp"
 
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="16dp"
-
                             android:background="@drawable/bg_spinner"
                             android:entries="@{viewModel.transactionTypeList}"
                             android:onItemSelected="@{(parent,view,position,id)->viewModel.onSelectedTransactionType(parent,view,position,id)}"
@@ -111,7 +110,7 @@
                         <TextView
                             android:id="@+id/textView120"
                             android:layout_width="0dp"
-                            android:layout_height="40dp"
+                            android:layout_height="50dp"
                             android:layout_marginStart="16dp"
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="16dp"
@@ -142,7 +141,7 @@
                         <TextView
                             android:id="@+id/textView122"
                             android:layout_width="0dp"
-                            android:layout_height="40dp"
+                            android:layout_height="50dp"
                             android:layout_marginStart="16dp"
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="16dp"
@@ -638,7 +637,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:hint="Account number"
-                                    android:text="@={viewModel.accountNumber}" />
+                                    android:text="@={viewModel.transferAccountNumber}" />
                             </com.google.android.material.textfield.TextInputLayout>
 
                             <ImageView

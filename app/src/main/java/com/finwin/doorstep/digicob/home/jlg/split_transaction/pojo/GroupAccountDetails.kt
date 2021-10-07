@@ -11,7 +11,7 @@ data class GroupAccountDetails(
 
 data class Dat(
     @SerializedName("Account Number")
-    val AccountNumber: String,
+    val accountNumber: String,
 
     @SerializedName("Customer ID")
     val CustomerID: String,
@@ -19,7 +19,7 @@ data class Dat(
     @SerializedName("Customer Name")
     val CustomerName: String,
     val Interest: String,
-    val IsClosing: String,
+    var IsClosing: String,
 
     @SerializedName("Penal Interest")
     val PenalInterest: String,
@@ -29,15 +29,15 @@ data class Dat(
 
     @SerializedName("Principal Due")
     val PrincipalDue: String,
-    val Remittance: String,
+    var Remittance: String,
 
     @SerializedName("Total Interest")
     val TotalInterest: String,
 
-    val AccNo: String,
-    val Amount: String,
-    val CustId: String,
-    val Name: String
+//    val AccNo: String,
+//    val Amount: String,
+//    val CustId: String,
+//    val Name: String
 )
 
 data class Data(

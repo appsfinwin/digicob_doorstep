@@ -6,41 +6,67 @@ import androidx.lifecycle.MutableLiveData
 import com.finwin.doorstep.digicob.home.jlg.JlgAction
 import com.finwin.doorstep.digicob.home.jlg.split_transaction.pojo.Dat
 
-class RemittanceItemViewmodel(dat: Dat, mAction: MutableLiveData<JlgAction>) : BaseObservable() {
+class RemittanceItemViewmodel(
+    var dataItem: List<Dat>,
+    mAction: MutableLiveData<JlgAction>,
+    var dataListLiveData: MutableLiveData<List<Dat>>,
+    var position: Int
+) : BaseObservable() {
 
-    var dataItem= dat
+
     var mAction=mAction
-    var customerId: String=dataItem.CustomerID
-    var customerName: String=dataItem.CustomerName
-    var accountNumber: String=dataItem.AccountNumber
-    var interest: String=dataItem.Interest
-    var principalBalance: String=dataItem.PrincipalBalance
-    var penalInterest: String=dataItem.PenalInterest
-    var principalDue: String=dataItem.PrincipalDue
-    var totalInterest: String=dataItem.TotalInterest
+    var customerId: String=dataItem[position].CustomerID
+    var customerName: String=dataItem[position].CustomerName
+    var accountNumber: String=dataItem[position].accountNumber
+    var interest: String=dataItem[position].Interest
+    var principalBalance: String=dataItem[position].PrincipalBalance
+    var penalInterest: String=dataItem[position].PenalInterest
+    var principalDue: String=dataItem[position].PrincipalDue
+    var totalInterest: String=dataItem[position].TotalInterest
 
 
-    val isChecked = ObservableField(getIsChecked(dataItem.IsClosing))
-    val remitance : ObservableField<String> = ObservableField(dataItem.Remittance)
+    val isChecked = ObservableField(getIsChecked(dataItem[position].IsClosing))
+    val remitance : ObservableField<String> = ObservableField(dataItem[position].Remittance)
 
     fun getIsChecked(value: String): Boolean{
         var check=false
-        check = !value.equals("N")
+        check = !value.equals("F")
         return check
     }
+    fun onRemittanceAmountChanged(text: CharSequence?) {
+
+       (if (text.toString() == "") "0" else text.toString())
+
+        dataItem[position].Remittance=  (if (text.toString() == "") "0" else text.toString())
+        dataListLiveData.value= dataItem
+//        if (isPhoneVerified.get() == true) {
+//            verifyPhoneNumber.setValue(false)
+//        }
+
+
+    }
     fun onTypeChecked(checked: Boolean, i: Int) {
+//        if (checked) {
+//
+//           // mAction.value= JlgAction(JlgAction.SELECT_ACCOUNT,dataItem[position])
+//
+//            var totalAmount: Double =
+//               interest.toDouble()+principalBalance.toDouble() + penalInterest.toDouble() + totalInterest.toDouble()+ principalDue.toDouble()
+//            remitance.set(totalInterest.toString())
+//
+//        } else {
+//            mAction.value= JlgAction(JlgAction.DE_SELECT_ACCOUNT,dataItem[position])
+//            remitance.set(dataItem[position].Remittance)
+//
+//        }
+
+
         if (checked) {
-
-            mAction.value= JlgAction(JlgAction.SELECT_ACCOUNT,dataItem)
-
-            var totalAmount: Double =
-               interest.toDouble()+principalBalance.toDouble() + penalInterest.toDouble() + totalInterest.toDouble()+ principalDue.toDouble()
-            remitance.set(totalInterest.toString())
-
+            dataItem[position].IsClosing="T"
+            dataListLiveData.value=dataItem
         } else {
-            mAction.value= JlgAction(JlgAction.DE_SELECT_ACCOUNT,dataItem)
-            remitance.set(dataItem.Remittance)
-
+            dataItem[position].IsClosing="F"
+            dataListLiveData.value=dataItem
         }
     }
 }

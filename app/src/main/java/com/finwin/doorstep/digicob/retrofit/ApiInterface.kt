@@ -12,6 +12,8 @@ import com.finwin.doorstep.digicob.home.jlg.jlg_loan_creation.jlg_loan_details.p
 import com.finwin.doorstep.digicob.home.jlg.jlg_loan_creation.select_group.pojo.CreateJlGLoanResponse
 import com.finwin.doorstep.digicob.home.jlg.jlg_loan_creation.select_group.pojo.GetGroupSelectResponse
 import com.finwin.doorstep.digicob.home.jlg.jlg_loan_creation.select_group.pojo.GetJlgProductResponse
+import com.finwin.doorstep.digicob.home.jlg.jlg_pending_lists.pojo.JlgPendingListResponse
+import com.finwin.doorstep.digicob.home.jlg.jlg_pending_lists.pojo.RemoveAccountResponse
 import com.finwin.doorstep.digicob.home.jlg.search_account_group.pojo.SearchGroupAccountResponse
 import com.finwin.doorstep.digicob.home.jlg.search_center.pojo.GetSearchCenterResponse
 import com.finwin.doorstep.digicob.home.jlg.search_group.pojo.GetCenterByBranchResponse
@@ -19,6 +21,7 @@ import com.finwin.doorstep.digicob.home.jlg.search_group.pojo.GetSearchGroupResp
 import com.finwin.doorstep.digicob.home.jlg.search_member.pojo.GetSearchMemberResponse
 import com.finwin.doorstep.digicob.home.jlg.split_transaction.pojo.CodeMasterResponse
 import com.finwin.doorstep.digicob.home.jlg.split_transaction.pojo.GroupAccountDetails
+import com.finwin.doorstep.digicob.home.jlg.split_transaction.pojo.SplitTransactionResponse
 import com.finwin.doorstep.digicob.home.transactions.cash_deposit.pojo.CashDepositResponse
 import com.finwin.doorstep.digicob.home.transactions.cash_deposit.pojo.GetAccountHolderResponse
 import com.finwin.doorstep.digicob.home.transactions.cash_transfer.pojo.CashTransferResponse
@@ -155,6 +158,15 @@ interface ApiInterface {
 
     @POST("LoanMaster")
     fun createJlgLoan(@Body body: RequestBody?): Single<CreateJlGLoanResponse?>?
+
+    @POST("JLGLoanTransaction")
+    fun jlgSplitTransaction(@Body body: RequestBody?): Single<SplitTransactionResponse?>?
+
+    @POST("JLGPending")
+    fun getPendingList(@Body body: RequestBody?): Single<JlgPendingListResponse?>?
+
+    @POST("JLGLoanRemove")
+    fun removeAccount(@Body body: RequestBody?): Single<RemoveAccountResponse?>?
 
 
 //    @POST("getLoanAccountHolder")

@@ -4,6 +4,9 @@ import android.content.Context
 import android.view.View
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.google.android.material.snackbar.Snackbar
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 public class Services {
@@ -31,6 +34,22 @@ public class Services {
             val snackbar = Snackbar
                 .make(view, message, Snackbar.LENGTH_LONG)
             snackbar.show()
+        }
+
+        fun convertDate(_date: String): String
+        {
+            var submitDate=""
+            val theDate: String = _date
+            val firstFormatter = SimpleDateFormat("MM-dd-yyyy")
+            try {
+                val date: Date = firstFormatter.parse(theDate)
+                val sd = SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z")
+                submitDate = sd.format(date)
+            } catch (e: ParseException) {
+                e.printStackTrace()
+            }
+
+            return  submitDate
         }
 
 

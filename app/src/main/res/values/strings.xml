@@ -17,7 +17,8 @@
     <string name="balance_enquiry"> Balance Enquiry</string>
     <string name="mini_statement"> Mini Statement</string>
     <string name="center_creation">Center Creation</string>
-    <string name="jlg_split_stransactions">JLG SPLIT TRANSACTIONS</string>
+    <string name="jlg_split_transactions">JLG SPLIT TRANSACTIONS</string>
+    <string name="jlg_split_closing">JLG SPLIT CLOSING</string>
     <string name="daily_report"> Daily Report</string>
     <string name="date_to_date_report"> Date-To-Date Report</string>
     <string name="change_password"> Change Password</string>

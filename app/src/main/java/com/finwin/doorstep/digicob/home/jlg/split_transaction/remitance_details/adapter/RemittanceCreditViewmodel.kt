@@ -2,29 +2,37 @@ package com.finwin.doorstep.digicob.home.jlg.split_transaction.remitance_details
 
 import androidx.databinding.BaseObservable
 import androidx.databinding.ObservableField
+import androidx.lifecycle.MutableLiveData
 import com.finwin.doorstep.digicob.home.jlg.split_transaction.pojo.Dat
 
-class RemittanceCreditViewmodel (dat: Dat) : BaseObservable()  {
-    var dataItem= dat
-
-    var customerId: String=dataItem.CustomerID
-    var customerName: String=dataItem.CustomerName
-    var accountNumber: String=dataItem.AccountNumber
-    var amount: String=dataItem.Interest
+class RemittanceCreditViewmodel(
+   var  dataItem: List<Dat>,
+    var position: Int,
+    var dataListLiveData: MutableLiveData<List<Dat>>
+) : BaseObservable()  {
 
 
-    val isChecked = ObservableField(getIsChecked(dataItem.IsClosing))
+    var customerId: String=dataItem[position].CustomerID
+    var customerName: String=dataItem[position].CustomerName
+    var accountNumber: String=dataItem[position].accountNumber
+    var amount: String=dataItem[position].Interest
+
+
+    val isChecked = ObservableField(getIsChecked(dataItem[position].IsClosing))
 
     fun getIsChecked(value: String): Boolean{
         var check=false
-        check = !value.equals("N")
+        check = !value.equals("F")
         return check
     }
+
     fun onTypeChecked(checked: Boolean, i: Int) {
         if (checked) {
-
+            dataItem[position].IsClosing="T"
+            dataListLiveData.value=dataItem
         } else {
-
+            dataItem[position].IsClosing="F"
+            dataListLiveData.value=dataItem
         }
     }
 
